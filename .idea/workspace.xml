@@ -4,17 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/SQL-Master.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Qt/main_window.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Qt/main_window.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Erste Version mit dem Grundgerüst">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qt/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/main_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qt/main_window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/main_window.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,10 +79,21 @@
       <option name="presentableId" value="Default" />
       <updated>1719743479156</updated>
     </task>
+    <task id="LOCAL-00001" summary="Erste Version mit dem Grundgerüst">
+      <option name="closed" value="true" />
+      <created>1720017711552</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1720017711552</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Erste Version mit dem Grundgerüst" />
+    <option name="LAST_COMMIT_MESSAGE" value="Erste Version mit dem Grundgerüst" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
