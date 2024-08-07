@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Erste Version mit dem Grundgerüst">
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Version 0.2&#10;Aufruf von mehreren Instanzen. Mit diesem Stand kann nun aufgebaut werden">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Qt/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Qt/main_window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/main_window.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,13 +85,22 @@
       <option name="project" value="LOCAL" />
       <updated>1720017711552</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Version 0.2&#10;Aufruf von mehreren Instanzen. Mit diesem Stand kann nun aufgebaut werden">
+      <option name="closed" value="true" />
+      <created>1721051325122</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1721051325122</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Erste Version mit dem Grundgerüst" />
-    <option name="LAST_COMMIT_MESSAGE" value="Erste Version mit dem Grundgerüst" />
+    <MESSAGE value="Version 0.2&#10;Aufruf von mehreren Instanzen. Mit diesem Stand kann nun aufgebaut werden" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 0.2&#10;Aufruf von mehreren Instanzen. Mit diesem Stand kann nun aufgebaut werden" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -102,6 +109,11 @@
           <url>file://$PROJECT_DIR$/main.py</url>
           <line>8</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SQL-master.py</url>
+          <line>138</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

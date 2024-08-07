@@ -1,4 +1,6 @@
 import sys
+from typing import List
+
 import pyodbc # ODBC
 import re
 
@@ -22,7 +24,7 @@ version = "0.2"
 
 
 # Globale Variable
-sql_input = ''
+sql_input = "select * from pfistam "
 
 
 
@@ -97,13 +99,14 @@ class MainWindow(QMainWindow):
 
 
         instanz_list =[
-            ["F40099DE", "fbaecker", "hilfe33", "T49"],
             ["F40099DE", "fbaecker", "hilfe33", "E09"],
+            ["F40099DE", "fbaecker", "hilfe33", "T49"],
             ["F40099DE", "fbaecker", "hilfe33", "T54"],
             ["F40099DE", "fbaecker", "hilfe33", "T51"],
             #### PROD
             ["F40001DE", "fbaecker", "hilfe33", "F51"],
             ["F40001DE", "fbaecker", "hilfe33", "F56"],
+            ["F40001DE", "fbaecker", "hilfe33", "F20"],
             ##["F40002DE", "fbaecker", "hilfe33", "F37"],
             ["F40004DE", "fbaecker", "hilfe33", "F49"],
             ["F40005DE", "fbaecker", "hilfe33", "F64"],
@@ -132,10 +135,7 @@ class MainWindow(QMainWindow):
 
 
         for i, zeile in enumerate(instanz_list):
-            # sql_query = f'''
-            #                            SELECT *
-            #                            from {zeile[3]}DATV7.PFISTAM
-            #     '''
+
 
             # wenn der Tabellen name identifiziert wurde, die Instanz und die Bibl. noch erweitern
             if table_name:
@@ -181,6 +181,9 @@ class MainWindow(QMainWindow):
 
         # Hole alle Zeilen der Abfrage
         rows = cursor.fetchall()
+        if len(rows) == 0:
+            print("Keine Daten gefunden")
+            return
 
         # Nur bei der ersten Abfrage
         if nummer == 0:
@@ -193,7 +196,7 @@ class MainWindow(QMainWindow):
            
 
         # Feldnamen aus den Metadaten der Abfrage abrufen
-        column_names = ["Instanz"] + [desc[0] for desc in cursor.description]  # Spalte 1 ist die Instanz
+        column_names: list[str] = ["Instanz"] + [desc[0] for desc in cursor.description]  # Spalte 1 ist die Instanz
         # Feldnamen als Überschrift ausgeben
         self.table_widget.setHorizontalHeaderLabels(column_names)
 
@@ -203,10 +206,12 @@ class MainWindow(QMainWindow):
             for col_idx, item in enumerate(row, start=1):
                 if isinstance(item, Decimal):
                     item = str(item)
+                elif isinstance(item, int):
+                    item = str(item)
                 self.table_widget.setItem(row_idx+self.zeilen_counter, col_idx, QTableWidgetItem(item))
 
         #Zeilen-Counter auf aktuellen Wert setzen für die nächste Instanz
-        self.zeilen_counter = self.zeilen_counter+row_idx
+        self.zeilen_counter = self.zeilen_counter+row_idx+1
 
         conn.close()
 
@@ -235,6 +240,9 @@ class NewWindow(QMainWindow):
 
         # Verbinde den OK-Knopf mit der Methode ok_button_clicked
         self.ok_button.clicked.connect(self.ok_button_clicked)
+
+        # Letzte SQL Befehl vorbelegen
+        self.plain_text_edit.setPlainText(sql_input)
 
 
 
