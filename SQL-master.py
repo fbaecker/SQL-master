@@ -1,3 +1,4 @@
+import configparser
 import sys
 from typing import List
 
@@ -16,15 +17,28 @@ from decimal import Decimal
 #
 # 30.06.24  0.1 Erste Version
 # 15.07.24  0.2 Aufruf von mehreren Instanzen. Mit diesem Stand kann nun aufgebaut werden
+# 17.11.24  0.3 Checkboxen welche HV-Version und Test und Prod in der Maske eingebaut
+#               Initialwerte für die Checkboxen in der ini-Datei ablegen
 #
 #
 # --------------------Version
-version = "0.2"
+version = "0.3"
 # ---------------------------------
+
+# Defaultwerte aus der Ini-Datei lesen
+config = configparser.ConfigParser()
+config.read('SQL-master.ini', encoding='utf-8')
+HV9 = config.get('Einstellungen', 'HV9')
+HV8 = config.get('Einstellungen', 'HV8')
+HV7 = config.get('Einstellungen', 'HV7')
+Nonhv = config.get('Einstellungen', 'NON-HV')
+Test = config.get('Einstellungen', 'TEST')
+Prod = config.get('Einstellungen', 'PROD')
+
 
 
 # Globale Variable
-sql_input = "select * from pfistam "
+sql_input = "select count(*) from pfistam where fsfirm <> '' "
 
 
 
@@ -37,6 +51,19 @@ class MainWindow(QMainWindow):
         self.gui = Ui_MainWindow()
         self.gui.setupUi(self)
 
+        # CheckBoxen vorbelegen
+        if HV9 == '1':
+            self.gui.checkBox_HV9.setChecked(True)
+        if HV8 == '1':
+            self.gui.checkBox_HV8.setChecked(True)
+        if HV7 == '1':
+            self.gui.checkBox_HV7.setChecked(True)
+        if Nonhv == '1':
+            self.gui.checkBox_NONHV.setChecked(True)
+        if Test == '1':
+            self.gui.checkBox_Test.setChecked(True)
+        if Prod == '1':
+            self.gui.checkBox_PROD.setChecked(True)
 
 
         # Verbinde Menüpunkte mit Methoden
@@ -86,6 +113,59 @@ class MainWindow(QMainWindow):
         global sql_input
         print("Taste Start gedrückt")
 
+
+
+        # Verhindere, dass beide Checkboxen für Test und Prod abgewählt sind
+        if not self.gui.checkBox_Test.isChecked() and not self.gui.checkBox_PROD.isChecked():
+            # Wenn beide nicht ausgewählt sind, eine Test Checkbox wieder aktivieren
+            sender = self.sender()
+            if sender == self.gui.checkBox_Test:
+                self.gui.checkBox_PROD.setChecked(True)
+            else:
+                self.gui.checkBox_Test.setChecked(True)
+
+        if self.gui.checkBox_HV9.isChecked():
+            if self.gui.checkBox_Test.isChecked():
+                print('HV9 - Test aufrufen')
+            if self.gui.checkBox_PROD.isChecked():
+                print('HV9 - Prod aufrufen')
+
+        if self.gui.checkBox_HV8.isChecked():
+            if self.gui.checkBox_Test.isChecked():
+                print('HV8 - Test aufrufen')
+            if self.gui.checkBox_PROD.isChecked():
+                print('HV8 - Prod aufrufen')
+
+        if self.gui.checkBox_HV7.isChecked():
+            if self.gui.checkBox_Test.isChecked():
+                print('HV7 - Test aufrufen')
+            if self.gui.checkBox_PROD.isChecked():
+                print('HV7 - Prod aufrufen')
+
+
+        if self.gui.checkBox_NONHV.isChecked():
+            if self.gui.checkBox_Test.isChecked():
+                print('NON-HV - Test aufrufen')
+            if self.gui.checkBox_PROD.isChecked():
+                print('NON-HV - Prod aufrufen')
+
+
+        # Speichern des Status der CheckBoxen wenn dies angewählt ist
+        if self.gui.checkBox_Einstellung.isChecked():
+            config.set('Einstellungen', 'HV9', '1' if self.gui.checkBox_HV9.isChecked() else '0')
+            config.set('Einstellungen', 'HV8', '1' if self.gui.checkBox_HV8.isChecked() else '0')
+            config.set('Einstellungen', 'HV7', '1' if self.gui.checkBox_HV7.isChecked() else '0')
+            config.set('Einstellungen', 'Nonhv', '1' if self.gui.checkBox_NONHV.isChecked() else '0')
+            config.set('Einstellungen', 'Test', '1' if self.gui.checkBox_Test.isChecked() else '0')
+            config.set('Einstellungen', 'Prod', '1' if self.gui.checkBox_PROD.isChecked() else '0')
+
+            # Schreiben der Änderungen zurück in die INI-Datei
+            with open('SQL-master.ini', 'w') as configfile:
+                config.write(configfile)
+
+        # ###Zum Testen hier mal ein return, damit kein SQL gestartet wird
+        return()
+
         # Haupt-Widget und Layout
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
@@ -99,29 +179,38 @@ class MainWindow(QMainWindow):
 
 
         instanz_list =[
-            ["F40099DE", "fbaecker", "hilfe33", "E09"],
-            ["F40099DE", "fbaecker", "hilfe33", "T49"],
-            ["F40099DE", "fbaecker", "hilfe33", "T54"],
-            ["F40099DE", "fbaecker", "hilfe33", "T51"],
-            #### PROD
-            ["F40001DE", "fbaecker", "hilfe33", "F51"],
-            ["F40001DE", "fbaecker", "hilfe33", "F56"],
+            ["F40099DE", "fbaecker", "hilfe44", "E09"],
+            ["F40099DE", "fbaecker", "hilfe44", "T43"],
+            ["F40099DE", "fbaecker", "hilfe44", "T49"],
+            ["F40099DE", "fbaecker", "hilfe44", "T54"],
+            ["F40099DE", "fbaecker", "hilfe44", "T51"],
+            ["F40099DE", "fbaecker", "hilfe44", "T76"],
+
+            ##HV7 PROD
             ["F40001DE", "fbaecker", "hilfe33", "F20"],
+            ["F40001DE", "fbaecker", "hilfe33", "F22"],
+            ["F40009DE", "fbaecker", "hilfe44", "F24"],
+            ["F40007DE", "fbaecker", "hilfe33", "F45"],
             ##["F40002DE", "fbaecker", "hilfe33", "F37"],
+            ##HV8 PROD
+            ["F40006DE", "fbaecker", "hilfe44", "F40"],
+            ["F40008DE", "fbaecker", "hilfe44", "F41"],
+            ["F40011DE", "fbaecker", "hilfe55", "F38"],
+            ["F40004DE", "fbaecker", "hilfe33", "F42"],
+            ["F40013DE", "fbaecker", "hilfe44", "F73"],
+            ##HV9 PROD
+            ##["FG400FE", "fbaecker", "hilfe33", "F43"],
             ["F40004DE", "fbaecker", "hilfe33", "F49"],
             ["F40005DE", "fbaecker", "hilfe33", "F64"],
-            ["F40005DE", "fbaecker", "hilfe33", "F74"],
-            ["F40006DE", "fbaecker", "hilfe44", "F40"],
-            ["F40007DE", "fbaecker", "hilfe33", "F45"],
+            ["F40001DE", "fbaecker", "hilfe33", "F51"],
             ["F40007DE", "fbaecker", "hilfe33", "F54"],
-            ["F40008DE", "fbaecker", "hilfe44", "F25"],
-            ["F40008DE", "fbaecker", "hilfe44", "F41"],
             ["F40008DE", "fbaecker", "hilfe44", "F55"],
-            ["F40009DE", "fbaecker", "hilfe44", "F24"],
-            ["F40011DE", "fbaecker", "hilfe55", "F38"],
+            ["F40001DE", "fbaecker", "hilfe33", "F56"],
             ["F40012DE", "fbaecker", "hilfe44", "F68"],
-            ["F40013DE", "fbaecker", "hilfe44", "F73"],
-            ["F40003PL", "fbaecker", "hilfe33", "F69"]
+            ["F40003PL", "fbaecker", "hilfe33", "F69"],
+            ["F40008DE", "fbaecker", "hilfe44", "F72"],
+            ["F40005DE", "fbaecker", "hilfe33", "F74"],
+            ["F40007DE", "fbaecker", "hilfe33", "F76"]
 
         ]
         self.zeilen_counter = 0
@@ -193,7 +282,7 @@ class MainWindow(QMainWindow):
             self.table_widget.setColumnCount(len(rows[0]) + 1)  # + 1 Feld für die Instanz
 
             layout.addWidget(self.table_widget)
-           
+
 
         # Feldnamen aus den Metadaten der Abfrage abrufen
         column_names: list[str] = ["Instanz"] + [desc[0] for desc in cursor.description]  # Spalte 1 ist die Instanz

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Version 0.2&#10;Aufruf von mehreren Instanzen. Mit diesem Stand kann nun aufgebaut werden">
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Zeilenzähler korrigiert. Wenn Ergebniss nur 1 Zeile z.B. wegen Count wurde nichts ausgegeben">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
     </list>
@@ -93,14 +93,23 @@
       <option name="project" value="LOCAL" />
       <updated>1721051325122</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Zeilenzähler korrigiert. Wenn Ergebniss nur 1 Zeile z.B. wegen Count wurde nichts ausgegeben">
+      <option name="closed" value="true" />
+      <created>1723059290407</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1723059290407</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Erste Version mit dem Grundgerüst" />
     <MESSAGE value="Version 0.2&#10;Aufruf von mehreren Instanzen. Mit diesem Stand kann nun aufgebaut werden" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 0.2&#10;Aufruf von mehreren Instanzen. Mit diesem Stand kann nun aufgebaut werden" />
+    <MESSAGE value="Zeilenzähler korrigiert. Wenn Ergebniss nur 1 Zeile z.B. wegen Count wurde nichts ausgegeben" />
+    <option name="LAST_COMMIT_MESSAGE" value="Zeilenzähler korrigiert. Wenn Ergebniss nur 1 Zeile z.B. wegen Count wurde nichts ausgegeben" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -112,10 +121,15 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>138</line>
-          <option name="timeStamp" value="5" />
+          <line>188</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="row" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
