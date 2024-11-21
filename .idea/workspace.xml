@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Zeilenzähler korrigiert. Wenn Ergebniss nur 1 Zeile z.B. wegen Count wurde nichts ausgegeben">
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Checkboxen welche HV-Version und Test und Prod in der Maske eingebaut&#10;Initialwerte für die Checkboxen in der ini-Datei ablegen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL-master.ini" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,16 +28,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Python.SQL-master.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Python.SQL-master.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="SQL-Master" />
@@ -101,7 +102,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723059290407</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Checkboxen welche HV-Version und Test und Prod in der Maske eingebaut&#10;Initialwerte für die Checkboxen in der ini-Datei ablegen">
+      <option name="closed" value="true" />
+      <created>1731879371026</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1731879371026</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -109,7 +118,8 @@
     <MESSAGE value="Erste Version mit dem Grundgerüst" />
     <MESSAGE value="Version 0.2&#10;Aufruf von mehreren Instanzen. Mit diesem Stand kann nun aufgebaut werden" />
     <MESSAGE value="Zeilenzähler korrigiert. Wenn Ergebniss nur 1 Zeile z.B. wegen Count wurde nichts ausgegeben" />
-    <option name="LAST_COMMIT_MESSAGE" value="Zeilenzähler korrigiert. Wenn Ergebniss nur 1 Zeile z.B. wegen Count wurde nichts ausgegeben" />
+    <MESSAGE value="Checkboxen welche HV-Version und Test und Prod in der Maske eingebaut&#10;Initialwerte für die Checkboxen in der ini-Datei ablegen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Checkboxen welche HV-Version und Test und Prod in der Maske eingebaut&#10;Initialwerte für die Checkboxen in der ini-Datei ablegen" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -121,8 +131,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>188</line>
-          <option name="timeStamp" value="6" />
+          <line>290</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SQL-master.py</url>
+          <line>277</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
