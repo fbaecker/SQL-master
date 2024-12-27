@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Checkboxen welche HV-Version und Test und Prod in der Maske eingebaut&#10;Initialwerte für die Checkboxen in der ini-Datei ablegen">
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Version 0.4&#10;Die Instanzliste mit der HV-Nummer und TST oder PROD erweitert&#10;Sortfunktion für die Instanzliste eingebaut.&#10;Berücksichtigung der CheckBoxen in bei der Abfrage">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL-master.ini" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -110,7 +109,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731879371026</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Version 0.4&#10;Die Instanzliste mit der HV-Nummer und TST oder PROD erweitert&#10;Sortfunktion für die Instanzliste eingebaut.&#10;Berücksichtigung der CheckBoxen in bei der Abfrage">
+      <option name="closed" value="true" />
+      <created>1732205200242</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1732205200242</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -119,7 +126,8 @@
     <MESSAGE value="Version 0.2&#10;Aufruf von mehreren Instanzen. Mit diesem Stand kann nun aufgebaut werden" />
     <MESSAGE value="Zeilenzähler korrigiert. Wenn Ergebniss nur 1 Zeile z.B. wegen Count wurde nichts ausgegeben" />
     <MESSAGE value="Checkboxen welche HV-Version und Test und Prod in der Maske eingebaut&#10;Initialwerte für die Checkboxen in der ini-Datei ablegen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Checkboxen welche HV-Version und Test und Prod in der Maske eingebaut&#10;Initialwerte für die Checkboxen in der ini-Datei ablegen" />
+    <MESSAGE value="Version 0.4&#10;Die Instanzliste mit der HV-Nummer und TST oder PROD erweitert&#10;Sortfunktion für die Instanzliste eingebaut.&#10;Berücksichtigung der CheckBoxen in bei der Abfrage" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 0.4&#10;Die Instanzliste mit der HV-Nummer und TST oder PROD erweitert&#10;Sortfunktion für die Instanzliste eingebaut.&#10;Berücksichtigung der CheckBoxen in bei der Abfrage" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -130,14 +138,10 @@
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="instanz == 'E09'" language="Python" />
           <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>290</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>277</line>
-          <option name="timeStamp" value="17" />
+          <line>321</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

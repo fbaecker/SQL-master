@@ -5,6 +5,8 @@ from typing import List
 import pyodbc # ODBC
 import re
 
+
+
 from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QMessageBox, QTableWidget, \
     QTableWidgetItem, QPlainTextEdit, QPushButton, QApplication
 from PySide6.QtCore import QTimer, QRect
@@ -22,10 +24,12 @@ from decimal import Decimal
 # 20.11.24  0.4 Die Instanzliste mit der HV-Nummer und TST oder PROD erweitert
 #               Sortfunktion für die Instanzliste eingebaut.
 #               Berücksichtigung der CheckBoxen in bei der Abfrage
+# 27.12.24  0.5 Das Festlegen des Table-Views erfolgt nun immer und nicht nur bei der ersten Instanz
+#               Wenn die erste Instanz keine Daten hatte sind keine Werte ausgegeben worden
 #
 #
 # --------------------Version
-version = "0.4"
+version = "0.5"
 # ---------------------------------
 
 # Defaultwerte aus der Ini-Datei lesen
@@ -116,6 +120,9 @@ class MainWindow(QMainWindow):
         global sql_input
         print("Taste Start gedrückt")
 
+
+
+
         # Zu beginn alle globalen Variablen für die Auswahl auf 0 setzen
         HV9 = '0'
         HV8 = '0'
@@ -135,6 +142,7 @@ class MainWindow(QMainWindow):
             else:
                 self.gui.checkBox_Test.setChecked(True)
                 Test = '1'
+
 
         # Die Werte der Checkboxen in die globalen Variablen schreiben
         if self.gui.checkBox_HV9.isChecked():
@@ -187,6 +195,7 @@ class MainWindow(QMainWindow):
             ["F40099DE", "fbaecker", "hilfe44", "T51", "HV9", "TST"],
             ["F40099DE", "fbaecker", "hilfe44", "T72", "HV9", "TST"],
             ["F40099DE", "fbaecker", "hilfe44", "T76", "HV9", "TST"],
+            ["F40099DE", "fbaecker", "hilfe44", "T78", "HV9", "TST"],
 
             ##HV7 TEST
             ["F40099DE", "fbaecker", "hilfe44", "T20", "HV7", "TST"],
@@ -218,6 +227,7 @@ class MainWindow(QMainWindow):
             ["F40008DE", "fbaecker", "hilfe44", "F72", "HV9", "PROD"],
             ["F40005DE", "fbaecker", "hilfe33", "F74", "HV9", "PROD"],
             ["F40007DE", "fbaecker", "hilfe33", "F76", "HV9", "PROD"]
+
 
         ]
         self.zeilen_counter = 0
@@ -321,14 +331,21 @@ class MainWindow(QMainWindow):
             print("Keine Daten gefunden")
             return
 
-        # Nur bei der ersten Abfrage
-        if nummer == 0:
-            # Anzahl der Spalten festlegen
-            #self.table_widget.setRowCount(len(rows))
-            self.table_widget.setRowCount(99999)
-            self.table_widget.setColumnCount(len(rows[0]) + 3)  # + 4 Felder für die Version, Art und Instanz
 
-            layout.addWidget(self.table_widget)
+        # Ab hier werden die die Daten ausgegeben
+
+
+
+        # Definieren der Breite und Länge der Tabelle für die Ausabe und Feldnamen setzen
+        # Dies wird bei jeder Instanz gemacht, da nicht sicher ist dass bei der ersten Instanz
+        # schon etwas gefunden wirdn.
+
+        # Anzahl der Spalten festlegen
+        #self.table_widget.setRowCount(len(rows))
+        self.table_widget.setRowCount(99999)
+        self.table_widget.setColumnCount(len(rows[0]) + 3)  # + 4 Felder für die Version, Art und Instanz
+
+        layout.addWidget(self.table_widget)
 
 
         # Feldnamen aus den Metadaten der Abfrage abrufen
@@ -352,6 +369,8 @@ class MainWindow(QMainWindow):
         self.zeilen_counter = self.zeilen_counter+row_idx+1
 
         conn.close()
+
+
 
 
 class NewWindow(QMainWindow):
@@ -414,3 +433,6 @@ if __name__ == "__main__":
     window.setWindowTitle(f'SQL-Master Version {version}')
     window.show()
     sys.exit(app.exec())
+
+
+
