@@ -25,7 +25,7 @@ from decimal import Decimal
 #               Sortfunktion für die Instanzliste eingebaut.
 #               Berücksichtigung der CheckBoxen in bei der Abfrage
 # 27.12.24  0.5 Das Festlegen des Table-Views erfolgt nun immer und nicht nur bei der ersten Instanz
-#               Wenn die erste Instanz keine Daten hatte sind keine Werte ausgegeben worden
+#               Wenn die erste Instanz keine Daten hatte sind keine Werte ausgegeben worden.
 #
 #
 # --------------------Version
