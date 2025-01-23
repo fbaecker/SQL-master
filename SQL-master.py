@@ -13,6 +13,11 @@ from PySide6.QtCore import QTimer, QRect
 from Qt.main_window import Ui_MainWindow
 from decimal import Decimal
 
+import json
+import os
+from datetime import datetime
+from PyQt5.QtCore import Qt
+
 
 #######################################################################################################################
 # Releasenotes
@@ -29,7 +34,7 @@ from decimal import Decimal
 #
 #
 # --------------------Version
-version = "0.5"
+version = "0.6"
 # ---------------------------------
 
 # Defaultwerte aus der Ini-Datei lesen
@@ -46,9 +51,28 @@ Prod = config.get('Einstellungen', 'PROD')
 
 # Globale Variable
 sql_input = "select count(*) from pfistam where fsfirm <> '' "
+history_index = 0
 
 
+HISTORY_FILE_JSON = "sql_history.json"
 
+def save_to_json_history(sql_statement):
+    """Speichert ein SQL-Statement mit Metadaten in eine JSON-Datei."""
+    history = []
+    if os.path.exists(HISTORY_FILE_JSON):
+        with open(HISTORY_FILE_JSON, "r") as file:
+            history = json.load(file)
+    entry = {"timestamp": datetime.now().isoformat(), "sql": sql_statement}
+    history.append(entry)
+    with open(HISTORY_FILE_JSON, "w") as file:
+        json.dump(history, file, indent=4)
+
+def read_json_history():
+    """Liest die JSON-History und gibt die Einträge zurück."""
+    if not os.path.exists(HISTORY_FILE_JSON):
+        return []
+    with open(HISTORY_FILE_JSON, "r") as file:
+        return json.load(file)
 
 class MainWindow(QMainWindow):
 
@@ -86,7 +110,8 @@ class MainWindow(QMainWindow):
 
 
     def open_file(self):
-        self.gui.plainTextEdit.setPlainText("Open File clicked")
+        print(read_json_history())
+        #self.gui.plainTextEdit.setPlainText("Open File clicked")
 
     def show_about(self):
         QMessageBox.about(self, "About", "This is a PyQt5/PySide6 application")
@@ -197,36 +222,45 @@ class MainWindow(QMainWindow):
             ["F40099DE", "fbaecker", "hilfe44", "T76", "HV9", "TST"],
             ["F40099DE", "fbaecker", "hilfe44", "T78", "HV9", "TST"],
 
+            ##HV8 TEST
+            ##["F40002DE", "fbaecker", "hilfe55", "F37","HV8", "TST"],
+            ##["F40002DE", "fbaecker", "hilfe55", "M37","HV8", "TST"],
+            ["F40099DE", "fbaecker", "hilfe44", "T40", "HV8", "TST"],
+            ["F40099DE", "fbaecker", "hilfe44", "T38", "HV8", "TST"],
+            ["F40099DE", "fbaecker", "hilfe44", "T42", "HV8", "TST"],
+            ["F40099DE", "fbaecker", "hilfe44", "T73", "HV8", "TST"],
+
             ##HV7 TEST
             ["F40099DE", "fbaecker", "hilfe44", "T20", "HV7", "TST"],
             ["F40099DE", "fbaecker", "hilfe44", "T22", "HV7", "TST"],
             ["F40099DE", "fbaecker", "hilfe44", "T24", "HV7", "TST"],
             ["F40099DE", "fbaecker", "hilfe44", "T45", "HV7", "TST"],
             ##HV7 PROD
-            ["F40001DE", "fbaecker", "hilfe33", "F20", "HV7", "PROD"],
-            ["F40001DE", "fbaecker", "hilfe33", "F22", "HV7", "PROD"],
-            ["F40009DE", "fbaecker", "hilfe44", "F24", "HV7", "PROD"],
-            ["F40007DE", "fbaecker", "hilfe33", "F45", "HV7", "PROD"],
-            ##["F40002DE", "fbaecker", "hilfe33", "F37"],
+            ["F40001DE", "fbaecker", "hilfe44", "F20", "HV7", "PROD"],
+            ["F40001DE", "fbaecker", "hilfe44", "F22", "HV7", "PROD"],
+            ["F40009DE", "fbaecker", "hilfe55", "F24", "HV7", "PROD"],
+            ["F40007DE", "fbaecker", "hilfe44", "F45", "HV7", "PROD"],
+
+
             ##HV8 PROD
-            ["F40006DE", "fbaecker", "hilfe44", "F40", "HV8", "PROD"],
-            ["F40008DE", "fbaecker", "hilfe44", "F41", "HV8", "PROD"],
-            ["F40011DE", "fbaecker", "hilfe55", "F38", "HV8", "PROD"],
-            ["F40004DE", "fbaecker", "hilfe33", "F42", "HV8", "PROD"],
+            ["F40006DE", "fbaecker", "hilfe55", "F40", "HV8", "PROD"],
+            ["F40011DE", "fbaecker", "hilfe66", "F38", "HV8", "PROD"],
+            ["F40004DE", "fbaecker", "hilfe44", "F42", "HV8", "PROD"],
             ["F40013DE", "fbaecker", "hilfe44", "F73", "HV8", "PROD"],
+
             ##HV9 PROD
             ##["FG400FE", "fbaecker", "hilfe33", "F43"],
-            ["F40004DE", "fbaecker", "hilfe33", "F49", "HV9", "PROD"],
-            ["F40005DE", "fbaecker", "hilfe33", "F64", "HV9", "PROD"],
-            ["F40001DE", "fbaecker", "hilfe33", "F51", "HV9", "PROD"],
-            ["F40007DE", "fbaecker", "hilfe33", "F54", "HV9", "PROD"],
-            ["F40008DE", "fbaecker", "hilfe44", "F55", "HV9", "PROD"],
-            ["F40001DE", "fbaecker", "hilfe33", "F56", "HV9", "PROD"],
-            ["F40012DE", "fbaecker", "hilfe44", "F68", "HV9", "PROD"],
-            ["F40003PL", "fbaecker", "hilfe33", "F69", "HV9", "PROD"],
-            ["F40008DE", "fbaecker", "hilfe44", "F72", "HV9", "PROD"],
-            ["F40005DE", "fbaecker", "hilfe33", "F74", "HV9", "PROD"],
-            ["F40007DE", "fbaecker", "hilfe33", "F76", "HV9", "PROD"]
+            ["F40004DE", "fbaecker", "hilfe44", "F49", "HV9", "PROD"],
+            ["F40005DE", "fbaecker", "hilfe44", "F64", "HV9", "PROD"],
+            ["F40001DE", "fbaecker", "hilfe44", "F51", "HV9", "PROD"],
+            ["F40007DE", "fbaecker", "hilfe44", "F54", "HV9", "PROD"],
+            ["F40008DE", "fbaecker", "hilfe55", "F55", "HV9", "PROD"],
+            ["F40001DE", "fbaecker", "hilfe44", "F56", "HV9", "PROD"],
+            ["F40012DE", "fbaecker", "hilfe55", "F68", "HV9", "PROD"],
+            ["F40003PL", "fbaecker", "hilfe44", "F69", "HV9", "PROD"],
+            ["F40008DE", "fbaecker", "hilfe55", "F72", "HV9", "PROD"],
+            ["F40005DE", "fbaecker", "hilfe44", "F74", "HV9", "PROD"],
+            ["F40007DE", "fbaecker", "hilfe44", "F76", "HV9", "PROD"]
 
 
         ]
@@ -376,6 +410,8 @@ class MainWindow(QMainWindow):
 class NewWindow(QMainWindow):
 
     def __init__(self, main_instance):
+        # Das Eingabewindow für das SQL-Komando wurde hier von Hand erstellt nicht über
+        # den QT-Designer. Dies müsste man noch mal ändern
         super().__init__()
         self.setWindowTitle("SQL-Eingabe")
         self.main_instance = main_instance  # Speichern der Instanz der anderen Klasse
@@ -393,14 +429,25 @@ class NewWindow(QMainWindow):
         self.ok_button = QPushButton("OK")
         layout.addWidget(self.ok_button)
 
+        # Erstelle einen History lesen-Knopf
+        self.history_button = QPushButton("History lesen")
+        layout.addWidget(self.history_button)
+
+        # Erstelle einen History schreiben-Knopf
+        self.history_schreiben_button = QPushButton("History schreiben")
+        layout.addWidget(self.history_schreiben_button)
+
 
 
         # Verbinde den OK-Knopf mit der Methode ok_button_clicked
         self.ok_button.clicked.connect(self.ok_button_clicked)
 
+        # Verbinde den History-Knopf mit der Methode history_clicked
+        self.history_button.clicked.connect(self.history_button_clicked)
+        self.history_schreiben_button.clicked.connect(self.history_schreiben_button_clicked)
+
         # Letzte SQL Befehl vorbelegen
         self.plain_text_edit.setPlainText(sql_input)
-
 
 
 
@@ -408,6 +455,8 @@ class NewWindow(QMainWindow):
         global sql_input
 
         sql_statement = self.plain_text_edit.toPlainText()
+
+
         sql_input = sql_statement
         print(f'OK button clicked. SQL-Statement: {sql_statement}')
         # Sie können hier weitere Aktionen hinzufügen, z.B. das Fenster schließen oder das SQL-Statement verarbeiten
@@ -417,6 +466,36 @@ class NewWindow(QMainWindow):
 
         # Aufrufen der Methode aus der anderen Klasse
         self.main_instance.abfrage()
+
+    def history_button_clicked(self):
+        # Ein SQL-Statement aus der History holen
+
+        global history_index
+
+        print("History geklicked")
+
+        print(f'Index {history_index}')
+        history_json = read_json_history()
+
+        # Neues Statement abrufen
+        sql_statement = history_json[history_index]["sql"]
+        print(f"Nächstes SQL-Statement: {sql_statement}")
+        self.plain_text_edit.setPlainText(sql_statement)
+        history_index += 1
+        # Vermeiden von Indexfehlern (zirkuläre Navigation)
+        if history_index >= len(history_json):
+            history_index = 0  # Zurück zum Anfang
+
+    def history_schreiben_button_clicked(self):
+        # Ein SQL-Statement aus in die History schreiben
+
+        print("History schreiben geklicked")
+        # Wenn ein neues SQL-statement eingegeben wurde, dann in History ablegen.
+        sql_statement = self.plain_text_edit.toPlainText()
+        if sql_input != sql_statement:
+           print(f'statement {sql_statement} in SQL-History ablegen')
+           save_to_json_history(sql_statement)
+
 
 
 def extract_table_name(sql_statement):
