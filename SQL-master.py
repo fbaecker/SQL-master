@@ -1,4 +1,5 @@
 import configparser
+from cryptography.fernet import Fernet
 import sys
 from typing import List
 
@@ -31,10 +32,13 @@ from PyQt5.QtCore import Qt
 #               Berücksichtigung der CheckBoxen in bei der Abfrage
 # 27.12.24  0.5 Das Festlegen des Table-Views erfolgt nun immer und nicht nur bei der ersten Instanz
 #               Wenn die erste Instanz keine Daten hatte sind keine Werte ausgegeben worden.
+#           0.6 History Funktion für die SQL-Statements
+# 24.01.25  0.7 Instanzen, User und Passwort aus Dateien lesen
+# 25.01.25  1.0 Alle Instanzen kommen nun aus der INI-Datei und auch die User und Passwörter
 #
 #
 # --------------------Version
-version = "0.6"
+version = "1.0"
 # ---------------------------------
 
 # Defaultwerte aus der Ini-Datei lesen
@@ -43,9 +47,13 @@ config.read('SQL-master.ini', encoding='utf-8')
 HV9 = config.get('Einstellungen', 'HV9')
 HV8 = config.get('Einstellungen', 'HV8')
 HV7 = config.get('Einstellungen', 'HV7')
-Nonhv = config.get('Einstellungen', 'NON-HV')
+Nonhv = config.get('Einstellungen', 'NONHV')
 Test = config.get('Einstellungen', 'TEST')
 Prod = config.get('Einstellungen', 'PROD')
+
+#Instanzen-Datei
+instanzen_datei = "instanzen.ini"
+password_ini_file = "sql-master-password.ini"
 
 
 
@@ -55,6 +63,68 @@ history_index = 0
 
 
 HISTORY_FILE_JSON = "sql_history.json"
+
+
+# Entschlüssele das Passwort
+def decrypt_text(encrypted_text, key):
+    """
+    Entschlüsselt einen verschlüsselten Text mithilfe eines Verschlüsselungsschlüssels.
+
+    Diese Funktion verwendet die Fernet-Verschlüsselung aus der `cryptography`-Bibliothek,
+    um den verschlüsselten Text zu entschlüsseln. Der Schlüssel muss derselbe sein,
+    der zur Verschlüsselung des Textes verwendet wurde.
+
+    Args:
+        encrypted_text (bytes): Der verschlüsselte Text als Byte-String.
+        key (bytes): Der Schlüssel (Byte-String), der für die Fernet-Entschlüsselung verwendet wird.
+
+    Returns:
+        str: Der entschlüsselte Text in Klartext.
+
+    """
+    f = Fernet(key)
+    decrypted_text = f.decrypt(encrypted_text).decode()
+    return decrypted_text
+
+
+
+
+def load_key():
+    """
+    Laden des Keyfiles
+    Das Key-File liegt parallel zum Programm mit dem Namen secret.key
+
+    Returns: Key für die Verschlüsselung / Entschlüsselung
+
+    """
+    return open("secret.key", "rb").read()
+
+
+# Lese das verschlüsselte Passwort aus der INI-Datei
+def read_decrypted_from_ini(section, key):
+    """
+    Lesen von verschlüsselten Texten aus einem INI-File
+
+    Args:
+        section (String): Section Name (hier der Maschinenname)
+        key (String): User oder Password
+
+    Returns (String): Text in lesbarer Form
+
+    """
+    config = configparser.ConfigParser()
+    config.read(password_ini_file)
+
+    # Überprüfen, ob der Abschnitt und der Schlüssel vorhanden sind
+    if section in config and key in config[section]:
+        encrypted_text = config[section][key]
+        return encrypted_text
+    else:
+        print(f'Kein {key} in section {section} in der INI-Datei gefunden.')
+        return ''
+
+
+
 
 def save_to_json_history(sql_statement):
     """Speichert ein SQL-Statement mit Metadaten in eine JSON-Datei."""
@@ -73,6 +143,48 @@ def read_json_history():
         return []
     with open(HISTORY_FILE_JSON, "r") as file:
         return json.load(file)
+
+def aufbereiten_instanz_liste():
+    """
+    Liest die Instanz-Datei, und die Datei mit dem User und das Passwort
+    Entschlüsselt das Passwort und User und füllt die Instanz-Liste
+
+
+    RETURN: gefüllte Instanzenliste
+    """
+    config = configparser.ConfigParser()
+    config.optionxform = str  # Behalte die Groß-/Kleinschreibung der Schlüssel bei
+    config.read(instanzen_datei)
+
+
+    key = load_key()
+    instanzen_liste = []
+    # Alle Sektionen (Abschnitte mit den Maschinen) auslesen
+    for maschine in config.sections():
+
+        # Alle Key (Key mit HV-Typ) in dieser Sektion auslesen
+        for hv_typ, value in config.items(maschine):
+            values = value.split(",")  # Teilt den String in eine Liste
+
+            for instanz in values:  # Schleife über die Werte in der Liste
+
+                user = decrypt_text(read_decrypted_from_ini(maschine, "user").encode(), key)
+                password = decrypt_text(read_decrypted_from_ini(maschine, "password").encode(), key)
+
+                # dem HV-Typ aus dem Key noch in Werte teilen
+                # HV9_TST   HV9   und   TST
+                hv_typ_teil =hv_typ.split("_")
+                instanzen_liste.append((maschine, user, password, instanz.strip(),
+                                        hv_typ_teil[0], hv_typ_teil[1]))
+
+    # Die resultierende Liste ausgeben (zu Testzwecken)
+    #for entry in instanzen_liste:
+    #    print(entry)
+
+    return instanzen_liste
+
+
+
 
 class MainWindow(QMainWindow):
 
@@ -209,61 +321,10 @@ class MainWindow(QMainWindow):
 
 
 
+        instanz_list = aufbereiten_instanz_liste()
 
 
-        instanz_list =[
-            ##HV9 TST
-            ["F40099DE", "fbaecker", "hilfe44", "E09", "HV9", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T43", "HV9", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T49", "HV9", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T54", "HV9", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T51", "HV9", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T72", "HV9", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T76", "HV9", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T78", "HV9", "TST"],
 
-            ##HV8 TEST
-            ##["F40002DE", "fbaecker", "hilfe55", "F37","HV8", "TST"],
-            ##["F40002DE", "fbaecker", "hilfe55", "M37","HV8", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T40", "HV8", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T38", "HV8", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T42", "HV8", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T73", "HV8", "TST"],
-
-            ##HV7 TEST
-            ["F40099DE", "fbaecker", "hilfe44", "T20", "HV7", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T22", "HV7", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T24", "HV7", "TST"],
-            ["F40099DE", "fbaecker", "hilfe44", "T45", "HV7", "TST"],
-            ##HV7 PROD
-            ["F40001DE", "fbaecker", "hilfe44", "F20", "HV7", "PROD"],
-            ["F40001DE", "fbaecker", "hilfe44", "F22", "HV7", "PROD"],
-            ["F40009DE", "fbaecker", "hilfe55", "F24", "HV7", "PROD"],
-            ["F40007DE", "fbaecker", "hilfe44", "F45", "HV7", "PROD"],
-
-
-            ##HV8 PROD
-            ["F40006DE", "fbaecker", "hilfe55", "F40", "HV8", "PROD"],
-            ["F40011DE", "fbaecker", "hilfe66", "F38", "HV8", "PROD"],
-            ["F40004DE", "fbaecker", "hilfe44", "F42", "HV8", "PROD"],
-            ["F40013DE", "fbaecker", "hilfe44", "F73", "HV8", "PROD"],
-
-            ##HV9 PROD
-            ##["FG400FE", "fbaecker", "hilfe33", "F43"],
-            ["F40004DE", "fbaecker", "hilfe44", "F49", "HV9", "PROD"],
-            ["F40005DE", "fbaecker", "hilfe44", "F64", "HV9", "PROD"],
-            ["F40001DE", "fbaecker", "hilfe44", "F51", "HV9", "PROD"],
-            ["F40007DE", "fbaecker", "hilfe44", "F54", "HV9", "PROD"],
-            ["F40008DE", "fbaecker", "hilfe55", "F55", "HV9", "PROD"],
-            ["F40001DE", "fbaecker", "hilfe44", "F56", "HV9", "PROD"],
-            ["F40012DE", "fbaecker", "hilfe55", "F68", "HV9", "PROD"],
-            ["F40003PL", "fbaecker", "hilfe44", "F69", "HV9", "PROD"],
-            ["F40008DE", "fbaecker", "hilfe55", "F72", "HV9", "PROD"],
-            ["F40005DE", "fbaecker", "hilfe44", "F74", "HV9", "PROD"],
-            ["F40007DE", "fbaecker", "hilfe44", "F76", "HV9", "PROD"]
-
-
-        ]
         self.zeilen_counter = 0
 
         print(f' sql_input aus der Eingabe {sql_input}')
@@ -305,6 +366,7 @@ class MainWindow(QMainWindow):
                 "HV9": HV9,
                 "HV8": HV8,
                 "HV7": HV7,
+                "NONHV": Nonhv,
                 "TST": Test,
                 "PROD": Prod
             }
