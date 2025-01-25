@@ -1,4 +1,4 @@
-from cryptography.fernet import Fernet
+from cryptography.fernet import Fernet, InvalidToken
 import configparser
 import os
 
@@ -12,14 +12,10 @@ import os
 ##################################################################################################
 
 # --------------------Version
-version = "0.1"
+version = "1.0"
 # ---------------------------------
 
 ini_file = 'sql-master-password.ini'
-
-
-
-
 
 
 
@@ -40,9 +36,14 @@ def decrypt_text(encrypted_text, key):
         str: Der entschlüsselte Text in Klartext.
 
     """
-    f = Fernet(key)
-    decrypted_text = f.decrypt(encrypted_text).decode()
-    return decrypted_text
+    try:
+        f = Fernet(key)
+        decrypted_text = f.decrypt(encrypted_text).decode()
+        return decrypted_text
+    except InvalidToken:
+        print("Fehler: Der Schlüssel oder der verschlüsselte Text ist ungültig.")
+    except Exception as e:
+        print(f"Ein unerwarteter Fehler ist aufgetreten: {str(e)}")
 
 
 
@@ -58,7 +59,7 @@ def load_key():
     return open("secret.key", "rb").read()
 
 
-# Lese das verschlüsselte Passwort aus der INI-Datei
+#
 def read_decrypted_from_ini(section, key):
     """
     Lesen von verschlüsselten Texten aus einem INI-File
@@ -87,52 +88,31 @@ def read_decrypted_from_ini(section, key):
 # Hauptlogik
 if __name__ == "__main__":
 
-    #generate_key()  # Dies sollte nur einmal ausgeführt werden, um den Schlüssel zu generieren
+
     key = load_key()
 
 
-print(f'Ich bin der Passwort-Anzeiger für den SQL-Master Version {version}')
+print(f'Passwort-Display für SQL-Master Version {version}')
 
 config = configparser.ConfigParser()
 config.read(ini_file)
 
+# Erlaubte Keys
+allowed_keys = {"user", "password"}
+
+
 # Alle Sektionen (Abschnitte) auslesen
 for section in config.sections():
-    print(f'Sektion: {section}')
 
+    print(f'Maschine: {section}-----------')
     # Alle Optionen (Schlüssel-Wert-Paare) in dieser Sektion auslesen
-    for key1, value in config.items(section):
-        print(f'{key1} = {decrypt_text(value.encode(), load_key())}')
-
-exit()
-# Passwort aus der INI-Datei lesen und entschlüsseln
-encrypted_password_from_ini = read_decrypted_from_ini('F40099DE', 'Password')
-if encrypted_password_from_ini != '':
-    decrypted_password = decrypt_text(encrypted_password_from_ini.encode(), key)
-    print(f" F40099DE passwort {decrypted_password}")
+    for key, value in config.items(section):
+        if(key in allowed_keys):
+                print(f'    {key} = {decrypt_text(value.encode(), load_key())}')
+        else:
+            print('Key sind nicht korrekt')
 
 
-system = input('System: ')
-user = input('User: ')
-#password = getpass.getpass('Passwort: ')
-password = input('Passwort: ')
-print(f"System: {system}, User: {user}, Passwort {password} wurde eingegeben.")
+    print('---------------------------------------------')
 
 input()
-
-print('User verschlüsselt in INI-Datei speichern')
-
-
-
-# User verschlüsseln und speichern
-encrypted_password = encrypt_text(password, key)
-encrypted_user = encrypt_text(user, key)
-
-
-
-write_decrypted_to_ini(encrypted_user, system, 'User')
-write_decrypted_to_ini(encrypted_password, system, 'Password')
-
-
-
-
