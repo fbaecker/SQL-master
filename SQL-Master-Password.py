@@ -2,18 +2,20 @@ import getpass
 from cryptography.fernet import Fernet
 import configparser
 import os
+import pwinput
+
 
 #######################################################################################################################
 # Releasenotes
 #
 # 23.01.25  0.1 Erste Version
-#
+# 25.01.25  1.0 Finale Version
 #
 #
 ##################################################################################################
 
 # --------------------Version
-version = "0.1"
+version = "1.0"
 # ---------------------------------
 
 ini_file = 'sql-master-password.ini'
@@ -27,13 +29,11 @@ def write_decrypted_to_ini(encrypted_text, section, kennung):
 
     Diese Methode liest eine vorhandene INI-Datei ein, fügt den entschlüsselten Text
     in die angegebene Sektion unter dem angegebenen Schlüssel (Kennung) ein
-    und speichert die Änderungen zurück in die Datei. Falls die Sektion nicht existiert,
+    und speichert die Änderungen zurück in die Datei. Somit wird der User und auch das Passwort upgedatet und
+    Steht nur einmal pro Maschine in der Datei.
+    Falls die Sektion nicht existiert,
     wird sie erstellt.
 
-    **Hinweis**:
-        Der Text wird im Klartext (nach der Decodierung) in der INI-Datei gespeichert.
-        Stellen Sie sicher, dass die Datei entsprechend geschützt ist, falls sensible
-        Informationen wie Passwörter enthalten sind.
 
     Args:
         encrypted_text (bytes): Der verschlüsselte Text, der gespeichert werden soll.
@@ -79,32 +79,7 @@ def encrypt_text(decrypted_text, key):
     encrypted_text = f.encrypt(decrypted_text.encode())
     return encrypted_text
 
-# In dieser Funktion wird der User / eingegeben Passwort verschlüsselt und dann in die INI-Datei
-# geschrieben
-# Wenn User oder Passwort leer ist, wird der Key aus der INI-Datei wieder gelöscht
-# Diese Funktion wird im Moment gar nicht benötigt
-# def user_pwd_speichern(self):
-#     if self.le_user.text() != '':
-#         print('User verschlüsselt in INI-Datei speichern')
-#         # User verschlüsseln und speichern
-#         encrypted_user = encrypt_text(self.le_user.text(), key)
-#         write_decrypted_to_ini(encrypted_user, 'ODBC-DEFAULT', 'User')
-#     else:
-#         delete_key_from_ini('ODBC-DEFAULT', 'User')
-#
-#     if self.le_password.text() != '':
-#         print('Passwort verschlüsselt in INI-Datei speichern')
-#         # Passwort verschlüsseln und speichern
-#         encrypted_password = encrypt_text(self.le_password.text(), key)
-#         write_decrypted_to_ini(encrypted_password, 'ODBC-DEFAULT', 'Password')
-#     else:
-#         delete_key_from_ini('ODBC-DEFAULT', 'Password')
-#
 
-
-
-
-# Entschlüssele das Passwort
 def decrypt_text(encrypted_text, key):
     """
     Entschlüsselt einen verschlüsselten Text mithilfe eines Verschlüsselungsschlüssels.
@@ -124,38 +99,6 @@ def decrypt_text(encrypted_text, key):
     f = Fernet(key)
     decrypted_text = f.decrypt(encrypted_text).decode()
     return decrypted_text
-
-
-
-
-# Löschen eines Keys aus der ini-Datei
-def delete_key_from_ini(section, key):
-    """
-    Löscht aus der INI-Datei ein Eintrag mit dem KEY aus der entsprechenden Section
-    Args:
-        section (string): Name der Section (Hier steht der Maschinenname)
-        key (string): User oder Passwort
-
-
-    """
-    config = configparser.ConfigParser()
-    config.read(ini_file)
-
-    # Überprüfen, ob die Sektion existiert
-    if section in config:
-        # Überprüfen, ob der Schlüssel existiert
-        if key in config[section]:
-            # Entfernen des Schlüssels
-            config.remove_option(section, key)
-            print(f"Schlüssel '{key}' in Sektion '{section}' wurde gelöscht.")
-        else:
-            print(f"Schlüssel '{key}' in Sektion '{section}' nicht gefunden.")
-    else:
-        print(f"Sektion '{section}' nicht gefunden.")
-
-    # Speichern der Änderungen in der INI-Datei
-    with open(ini_file, 'w') as configfile:
-        config.write(configfile)
 
 
 def generate_key():
@@ -215,40 +158,33 @@ if __name__ == "__main__":
     key = load_key()
 
 
-print(f'Ich bin der Passwortmanager für den SQL-Master Version {version}')
+print(f'Passwortmanager für den SQL-Master Version {version}')
 
-# Test zum Löschen eines Password-Eintrags
-# delete_key_from_ini('F40099DE', 'Password')
-# exit()
-
-# Passwort aus der INI-Datei lesen und entschlüsseln
-encrypted_password_from_ini = read_decrypted_from_ini('F40099DE', 'Password')
-if encrypted_password_from_ini != '':
-    decrypted_password = decrypt_text(encrypted_password_from_ini.encode(), key)
-    print(f" F40099DE passwort {decrypted_password}")
+# # Passwort aus der INI-Datei lesen und entschlüsseln
+# encrypted_password_from_ini = read_decrypted_from_ini('F40099DE', 'Password')
+# if encrypted_password_from_ini != '':
+#     decrypted_password = decrypt_text(encrypted_password_from_ini.encode(), key)
+#     print(f" F40099DE passwort {decrypted_password}")
 
 
 system = input('System: ')
 user = input('User: ')
-#password = getpass.getpass('Passwort: ')
-password = input('Passwort: ')
-print(f"System: {system}, User: {user}, Passwort {password} wurde eingegeben.")
-
-input()
-
-print('User verschlüsselt in INI-Datei speichern')
-
+## Wenn das Programm in phycharm ausgeführt werden soll dann geht pwinput nicht,
+## da die Konsole von phycharm sich anders verhält wie eine normal Konsole
+## Hier dann zu Testzwecken mit input arbeiten. Hier wird das passwort allerdings angezeit.
+password = pwinput.pwinput(prompt="Passwort: ", mask="*")
+#password = input('Passwort: ')
 
 
 # User verschlüsseln und speichern
 encrypted_password = encrypt_text(password, key)
 encrypted_user = encrypt_text(user, key)
 
-
-
 write_decrypted_to_ini(encrypted_user, system, 'User')
 write_decrypted_to_ini(encrypted_password, system, 'Password')
 
+print(f"System: {system}, User: {user}, verschlüsselt mit dem Passwort in INI-Datei gespeichert.")
 
+input()
 
 
