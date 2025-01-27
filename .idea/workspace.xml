@@ -5,12 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Das Festlegen des Table-Views erfolgt nun immer und nicht nur bei der ersten Instanz&#10;Wenn die erste Instanz keine Daten hatte sind keine Werte ausgegeben worden">
-      <change afterPath="$PROJECT_DIR$/SQL-Master-Password.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/secret.key" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql-master-password.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.ini" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/sql-master-password-display/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password-display/EXE-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/sql-master-password/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password/EXE-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/sql-master/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/Analysis-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/sql-master/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/EXE-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/sql-master/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/PKG-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/sql-master/sql-master.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/sql-master.pkg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/sql-master-password-display.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/sql-master-password-display.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/sql-master-password.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/sql-master-password.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/sql-master.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/sql-master.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql-master.exe" beforeDir="false" afterPath="$PROJECT_DIR$/sql-master.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +33,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="Excel-Ausgabe" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -51,7 +57,7 @@
     "Python.main.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "sql-history"
+    "git-widget-placeholder": "master"
   }
 }]]></component>
   <component name="RunManager">
@@ -152,6 +158,29 @@
     </task>
     <option name="localTasksCounter" value="8" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
