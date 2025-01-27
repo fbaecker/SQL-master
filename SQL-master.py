@@ -6,6 +6,8 @@ from typing import List
 import pyodbc # ODBC
 import re
 
+from openpyxl import Workbook
+
 
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QMessageBox, QTableWidget, \
@@ -60,9 +62,14 @@ password_ini_file = "sql-master-password.ini"
 # Globale Variable
 sql_input = "select count(*) from pfistam where fsfirm <> '' "
 history_index = 0
-
+header_zeilen = False
 
 HISTORY_FILE_JSON = "sql_history.json"
+
+# Neue Excel-Arbeitsmappe erstellen
+workbook = Workbook()
+sheet = workbook.active
+sheet.title = "SQL Ergebnisse"
 
 
 # Entschlüssele das Passwort
@@ -389,6 +396,10 @@ class MainWindow(QMainWindow):
             print(f'Ende der for schleife {i}')
             zeile_in_for += 1
 
+        # Excel-Datei speichern
+        workbook.save("sql_results.xlsx")
+        print("Daten wurden in die Datei 'sql_results.xlsx' geschrieben.")
+
 
 
 
@@ -396,6 +407,8 @@ class MainWindow(QMainWindow):
 
     # Methode um pro Instanz das SQL-Statement auszuführen am Bildschirm auszugeben
     def sql_pro_instanz(self, sql_statement, host, user, passwort, instanz, layout, nummer, version, art):
+
+        global header_zeilen
 
         print(f'Zeilen-Zähler  {instanz}: {self.zeilen_counter}')
 
@@ -428,17 +441,35 @@ class MainWindow(QMainWindow):
             return
 
 
-        # Ab hier werden die die Daten ausgegeben
+        # Ab hier werden die Daten ausgegeben
 
+        #***************Test für EXCEL-Ausgabe**********************'
+
+        # Überschriften nur in der ersten Zeile
+        if header_zeilen == False:
+            # Spaltennamen aus der Abfrage holen
+            column_names = ["Version"] + ["Art"] + ["Instanz"] +[description[0] for description in cursor.description]
+
+            # Spaltenüberschriften in die erste Zeile schreiben
+            sheet.append(column_names)
+            header_zeilen = True
+
+
+        # Datenzeilen in das Excel-Blatt schreiben
+        for row in rows:
+            sheet.append([version]+[art]+[instanz]+list(row))  # Jede Zeile in eine Liste umwandeln
+
+
+        #***********************************************************
 
 
         # Definieren der Breite und Länge der Tabelle für die Ausabe und Feldnamen setzen
         # Dies wird bei jeder Instanz gemacht, da nicht sicher ist dass bei der ersten Instanz
-        # schon etwas gefunden wirdn.
+        # schon etwas gefunden wird.
 
         # Anzahl der Spalten festlegen
         #self.table_widget.setRowCount(len(rows))
-        self.table_widget.setRowCount(99999)
+        self.table_widget.setRowCount(999999)
         self.table_widget.setColumnCount(len(rows[0]) + 3)  # + 4 Felder für die Version, Art und Instanz
 
         layout.addWidget(self.table_widget)

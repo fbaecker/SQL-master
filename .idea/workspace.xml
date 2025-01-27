@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Das Festlegen des Table-Views erfolgt nun immer und nicht nur bei der ersten Instanz&#10;Wenn die erste Instanz keine Daten hatte sind keine Werte ausgegeben worden">
-      <change afterPath="$PROJECT_DIR$/SQL-Master-Password.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/secret.key" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql-master-password.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql-master_V1.0.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.ini" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql-master.exe" beforeDir="false" afterPath="$PROJECT_DIR$/sql-master.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,10 +47,10 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "Python.SQL-Master-Password.executor": "Debug",
     "Python.SQL-master.executor": "Run",
-    "Python.main.executor": "Debug",
+    "Python.main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "sql-history"
+    "git-widget-placeholder": "Excel-Ausgabe"
   }
 }]]></component>
   <component name="RunManager">
@@ -172,19 +171,14 @@
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>112</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>480</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SQL-Master-Password.py</url>
           <line>39</line>
           <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SQL-master.py</url>
+          <line>399</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
