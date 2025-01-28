@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Das Festlegen des Table-Views erfolgt nun immer und nicht nur bei der ersten Instanz&#10;Wenn die erste Instanz keine Daten hatte sind keine Werte ausgegeben worden">
-      <change afterPath="$PROJECT_DIR$/sql-master_V1.0.exe" afterDir="false" />
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="erster Prototyp um die Daten auch in eine Excel-Liste zu schreiben">
+      <change afterPath="$PROJECT_DIR$/sql_results.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL-master.ini" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql-master.exe" beforeDir="false" afterPath="$PROJECT_DIR$/sql-master.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +147,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735307322090</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="erster Prototyp um die Daten auch in eine Excel-Liste zu schreiben">
+      <option name="closed" value="true" />
+      <created>1738012565976</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1738012565976</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -160,7 +166,8 @@
     <MESSAGE value="Checkboxen welche HV-Version und Test und Prod in der Maske eingebaut&#10;Initialwerte für die Checkboxen in der ini-Datei ablegen" />
     <MESSAGE value="Version 0.4&#10;Die Instanzliste mit der HV-Nummer und TST oder PROD erweitert&#10;Sortfunktion für die Instanzliste eingebaut.&#10;Berücksichtigung der CheckBoxen in bei der Abfrage" />
     <MESSAGE value="Das Festlegen des Table-Views erfolgt nun immer und nicht nur bei der ersten Instanz&#10;Wenn die erste Instanz keine Daten hatte sind keine Werte ausgegeben worden" />
-    <option name="LAST_COMMIT_MESSAGE" value="Das Festlegen des Table-Views erfolgt nun immer und nicht nur bei der ersten Instanz&#10;Wenn die erste Instanz keine Daten hatte sind keine Werte ausgegeben worden" />
+    <MESSAGE value="erster Prototyp um die Daten auch in eine Excel-Liste zu schreiben" />
+    <option name="LAST_COMMIT_MESSAGE" value="erster Prototyp um die Daten auch in eine Excel-Liste zu schreiben" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -177,7 +184,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>399</line>
+          <line>400</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>

@@ -7,6 +7,7 @@ import pyodbc # ODBC
 import re
 
 from openpyxl import Workbook
+from openpyxl.styles import Font, PatternFill
 
 
 
@@ -453,11 +454,29 @@ class MainWindow(QMainWindow):
             # Spaltenüberschriften in die erste Zeile schreiben
             sheet.append(column_names)
             header_zeilen = True
+            #Autofilter in die Überschrift mit den Feldnamen setzen
+            sheet.auto_filter.ref = sheet.dimensions
 
+            # Formatierung der Kopfzeile Schrift in Bold und Hintergrund Grau
+            header_font = Font(bold=True)  # Fett
+            header_fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type="solid")  # Grau
+            for cell in sheet[1]:  # Erste Zeile (Kopfzeile)
+                cell.font = header_font
+                cell.fill = header_fill
 
         # Datenzeilen in das Excel-Blatt schreiben
         for row in rows:
             sheet.append([version]+[art]+[instanz]+list(row))  # Jede Zeile in eine Liste umwandeln
+
+        # Spaltenbreite automatisch anpassen
+        for column in sheet.columns:
+            max_length = 0
+            column_letter = column[0].column_letter  # Spaltenbuchstabe (z. B. "A", "B", ...)
+            for cell in column:
+                if cell.value:  # Falls die Zelle nicht leer ist
+                    max_length = max(max_length, len(str(cell.value)))
+            adjusted_width = max_length + 2  # Etwas zusätzlichen Platz hinzufügen
+            sheet.column_dimensions[column_letter].width = adjusted_width
 
 
         #***********************************************************
