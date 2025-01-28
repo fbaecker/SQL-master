@@ -54,6 +54,7 @@ Nonhv = config.get('Einstellungen', 'NONHV')
 Test = config.get('Einstellungen', 'TEST')
 Prod = config.get('Einstellungen', 'PROD')
 
+
 #Instanzen-Datei
 instanzen_datei = "instanzen.ini"
 password_ini_file = "sql-master-password.ini"
@@ -224,6 +225,39 @@ class MainWindow(QMainWindow):
         self.gui.action_ber.triggered.connect(self.show_about)
         self.gui.actionSQL_Eingabe.triggered.connect(self.sql_eingabe)
 
+        # Verbinden der Check-Boxen mit einer Änderungs-Methode
+        self.gui.checkBox_HV9.stateChanged.connect(self.on_checkbox_changed)
+        self.gui.checkBox_HV8.stateChanged.connect(self.on_checkbox_changed)
+        self.gui.checkBox_HV7.stateChanged.connect(self.on_checkbox_changed)
+        self.gui.checkBox_NONHV.stateChanged.connect(self.on_checkbox_changed)
+        self.gui.checkBox_Test.stateChanged.connect(self.on_checkbox_changed)
+        self.gui.checkBox_PROD.stateChanged.connect(self.on_checkbox_changed)
+
+    def on_checkbox_changed(self):
+        global HV9, HV8, HV7, Nonhv, Test, Prod
+
+        # zuerst alle globale Variable ausmachen
+        HV9 = '0'
+        HV8 = '0'
+        HV7 = '0'
+        Nonhv = '0'
+        Test = '0'
+        Prod = '0'
+
+        # Die Werte der Checkboxen in die globalen Variablen wieder an machen die an sind
+        if self.gui.checkBox_HV9.isChecked():
+            HV9 = '1'
+        if self.gui.checkBox_HV8.isChecked():
+            HV8 = '1'
+        if self.gui.checkBox_HV7.isChecked():
+            HV7 = '1'
+        if self.gui.checkBox_NONHV.isChecked():
+            Nonhv = '1'
+        if self.gui.checkBox_Test.isChecked():
+            Test = '1'
+        if self.gui.checkBox_PROD.isChecked():
+            Prod = '1'
+
 
 
 
@@ -232,6 +266,8 @@ class MainWindow(QMainWindow):
     def open_file(self):
         print(read_json_history())
         #self.gui.plainTextEdit.setPlainText("Open File clicked")
+
+
 
     def show_about(self):
         QMessageBox.about(self, "About", "This is a PyQt5/PySide6 application")
@@ -262,61 +298,67 @@ class MainWindow(QMainWindow):
 
 
     def abfrage(self):
-        global sql_input
+        global sql_input, HV9, HV8, HV7, Nonhv, Test, Prod
         print("Taste Start gedrückt")
 
 
 
 
         # Zu beginn alle globalen Variablen für die Auswahl auf 0 setzen
-        HV9 = '0'
-        HV8 = '0'
-        HV7 = '0'
-        Nonhv = '0'
-        Test = '0'
-        Prod = '0'
+        # HV9 = '0'
+        # HV8 = '0'
+        # HV7 = '0'
+        # Nonhv = '0'
+        # Test = '0'
+        # Prod = '0'
 
 
         # Verhindern, dass beide Checkboxen für Test und Prod abgewählt sind
-        if not self.gui.checkBox_Test.isChecked() and not self.gui.checkBox_PROD.isChecked():
+        if Test == '0'  and Prod == '0':
             # Wenn beide nicht ausgewählt sind, eine Test Checkbox wieder aktivieren
             sender = self.sender()
-            if sender == self.gui.checkBox_Test:
-                self.gui.checkBox_PROD.setChecked(True)
-                Prod = '1'
-            else:
-                self.gui.checkBox_Test.setChecked(True)
-                Test = '1'
+            self.gui.checkBox_Test.setChecked(True)
+            Test = '1'
+        # if not self.gui.checkBox_Test.isChecked() and not self.gui.checkBox_PROD.isChecked():
+        #     # Wenn beide nicht ausgewählt sind, eine Test Checkbox wieder aktivieren
+        #     sender = self.sender()
+        #     if sender == self.gui.checkBox_Test:
+        #         self.gui.checkBox_PROD.setChecked(True)
+        #         Prod = '1'
+        #     else:
+        #         self.gui.checkBox_Test.setChecked(True)
+        #         Test = '1'
 
 
         # Die Werte der Checkboxen in die globalen Variablen schreiben
-        if self.gui.checkBox_HV9.isChecked():
-            HV9 = '1'
-        if self.gui.checkBox_HV8.isChecked():
-            HV8 = '1'
-        if self.gui.checkBox_HV7.isChecked():
-            HV7 = '1'
-        if self.gui.checkBox_NONHV.isChecked():
-            Nonhv = '1'
-        if self.gui.checkBox_Test.isChecked():
-            Test = '1'
-        if self.gui.checkBox_PROD.isChecked():
-            Prod = '1'
+        # if self.gui.checkBox_HV9.isChecked():
+        #     HV9 = '1'
+        # if self.gui.checkBox_HV8.isChecked():
+        #     HV8 = '1'
+        # if self.gui.checkBox_HV7.isChecked():
+        #     HV7 = '1'
+        # if self.gui.checkBox_NONHV.isChecked():
+        #     Nonhv = '1'
+        # if self.gui.checkBox_Test.isChecked():
+        #     Test = '1'
+        # if self.gui.checkBox_PROD.isChecked():
+        #     Prod = '1'
 
 
 
         # Speichern des Status der CheckBoxen wenn dies angewählt ist
-        if self.gui.checkBox_Einstellung.isChecked():
-            config.set('Einstellungen', 'HV9', '1' if self.gui.checkBox_HV9.isChecked() else '0')
-            config.set('Einstellungen', 'HV8', '1' if self.gui.checkBox_HV8.isChecked() else '0')
-            config.set('Einstellungen', 'HV7', '1' if self.gui.checkBox_HV7.isChecked() else '0')
-            config.set('Einstellungen', 'Nonhv', '1' if self.gui.checkBox_NONHV.isChecked() else '0')
-            config.set('Einstellungen', 'Test', '1' if self.gui.checkBox_Test.isChecked() else '0')
-            config.set('Einstellungen', 'Prod', '1' if self.gui.checkBox_PROD.isChecked() else '0')
-
-            # Schreiben der Änderungen zurück in die INI-Datei
-            with open('SQL-master.ini', 'w') as configfile:
-                config.write(configfile)
+        ## TO DO Einstellung muss noch mal geprüft werden
+        # if self.gui.checkBox_Einstellung.isChecked():
+        #     config.set('Einstellungen', 'HV9', '1' if self.gui.checkBox_HV9.isChecked() else '0')
+        #     config.set('Einstellungen', 'HV8', '1' if self.gui.checkBox_HV8.isChecked() else '0')
+        #     config.set('Einstellungen', 'HV7', '1' if self.gui.checkBox_HV7.isChecked() else '0')
+        #     config.set('Einstellungen', 'Nonhv', '1' if self.gui.checkBox_NONHV.isChecked() else '0')
+        #     config.set('Einstellungen', 'Test', '1' if self.gui.checkBox_Test.isChecked() else '0')
+        #     config.set('Einstellungen', 'Prod', '1' if self.gui.checkBox_PROD.isChecked() else '0')
+        #
+        #     # Schreiben der Änderungen zurück in die INI-Datei
+        #     with open('SQL-master.ini', 'w') as configfile:
+        #         config.write(configfile)
 
 
         # Haupt-Widget und Layout
