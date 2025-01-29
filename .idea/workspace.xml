@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Kopfzeile im Excle formatiert und Autofilter eingebaut">
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Umstellung der Checkboxen auf globale Variable um diese dann bei der Ersellung abzufragen. Hiermit kann das SQL-State mehrfach aufgerufen werden">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql_results.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/sql_results.xlsx" afterDir="false" />
@@ -40,17 +40,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Python.SQL-Master-Password.executor": "Debug",
-    "Python.SQL-master.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Excel-Ausgabe"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.SQL-Master-Password.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.SQL-master.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Excel-Ausgabe&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="SQL-Master" />
@@ -163,7 +163,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738094510428</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Umstellung der Checkboxen auf globale Variable um diese dann bei der Ersellung abzufragen. Hiermit kann das SQL-State mehrfach aufgerufen werden">
+      <option name="closed" value="true" />
+      <created>1738099168711</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1738099168711</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -176,7 +184,8 @@
     <MESSAGE value="Das Festlegen des Table-Views erfolgt nun immer und nicht nur bei der ersten Instanz&#10;Wenn die erste Instanz keine Daten hatte sind keine Werte ausgegeben worden" />
     <MESSAGE value="erster Prototyp um die Daten auch in eine Excel-Liste zu schreiben" />
     <MESSAGE value="Kopfzeile im Excle formatiert und Autofilter eingebaut" />
-    <option name="LAST_COMMIT_MESSAGE" value="Kopfzeile im Excle formatiert und Autofilter eingebaut" />
+    <MESSAGE value="Umstellung der Checkboxen auf globale Variable um diese dann bei der Ersellung abzufragen. Hiermit kann das SQL-State mehrfach aufgerufen werden" />
+    <option name="LAST_COMMIT_MESSAGE" value="Umstellung der Checkboxen auf globale Variable um diese dann bei der Ersellung abzufragen. Hiermit kann das SQL-State mehrfach aufgerufen werden" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -193,7 +202,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>442</line>
+          <line>444</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>

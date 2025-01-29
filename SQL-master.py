@@ -298,11 +298,13 @@ class MainWindow(QMainWindow):
 
 
     def abfrage(self):
-        global sql_input, HV9, HV8, HV7, Nonhv, Test, Prod
+        global sql_input, HV9, HV8, HV7, Nonhv, Test, Prod, header_zeilen
         print("Taste Start gedrückt")
 
-
-
+        # Löscht alle Zeilen inkl. der Kopfzeile
+        # Flag für header_zeilen auf False, damit der neue Header erstellt wird
+        sheet.delete_rows(1, sheet.max_row)
+        header_zeilen = False
 
         # Zu beginn alle globalen Variablen für die Auswahl auf 0 setzen
         # HV9 = '0'
@@ -498,6 +500,9 @@ class MainWindow(QMainWindow):
             header_zeilen = True
             #Autofilter in die Überschrift mit den Feldnamen setzen
             sheet.auto_filter.ref = sheet.dimensions
+
+            # Erste Zeile Fixieren
+            sheet.freeze_panes = "A2"
 
             # Formatierung der Kopfzeile Schrift in Bold und Hintergrund Grau
             header_font = Font(bold=True)  # Fett
