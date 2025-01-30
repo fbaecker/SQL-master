@@ -38,6 +38,7 @@ from PyQt5.QtCore import Qt
 #           0.6 History Funktion für die SQL-Statements
 # 24.01.25  0.7 Instanzen, User und Passwort aus Dateien lesen
 # 25.01.25  1.0 Alle Instanzen kommen nun aus der INI-Datei und auch die User und Passwörter
+# 29.01.25  1.1 Ausgabe der Ergebnisse zusätzlich in eine Excel-Datei
 #
 #
 # --------------------Version
@@ -65,6 +66,7 @@ password_ini_file = "sql-master-password.ini"
 sql_input = "select count(*) from pfistam where fsfirm <> '' "
 history_index = 0
 header_zeilen = False
+einstellung_uebernehmen = '0'
 
 HISTORY_FILE_JSON = "sql_history.json"
 
@@ -232,9 +234,10 @@ class MainWindow(QMainWindow):
         self.gui.checkBox_NONHV.stateChanged.connect(self.on_checkbox_changed)
         self.gui.checkBox_Test.stateChanged.connect(self.on_checkbox_changed)
         self.gui.checkBox_PROD.stateChanged.connect(self.on_checkbox_changed)
+        self.gui.checkBox_Einstellung.stateChanged.connect(self.on_checkbox_changed)
 
     def on_checkbox_changed(self):
-        global HV9, HV8, HV7, Nonhv, Test, Prod
+        global HV9, HV8, HV7, Nonhv, Test, Prod, einstellung_uebernehmen
 
         # zuerst alle globale Variable ausmachen
         HV9 = '0'
@@ -243,6 +246,7 @@ class MainWindow(QMainWindow):
         Nonhv = '0'
         Test = '0'
         Prod = '0'
+        einstellung_uebernehmen = '0'
 
         # Die Werte der Checkboxen in die globalen Variablen wieder an machen die an sind
         if self.gui.checkBox_HV9.isChecked():
@@ -257,6 +261,8 @@ class MainWindow(QMainWindow):
             Test = '1'
         if self.gui.checkBox_PROD.isChecked():
             Prod = '1'
+        if self.gui.checkBox_Einstellung.isChecked():
+            einstellung_uebernehmen = '1'
 
 
 
@@ -298,7 +304,7 @@ class MainWindow(QMainWindow):
 
 
     def abfrage(self):
-        global sql_input, HV9, HV8, HV7, Nonhv, Test, Prod, header_zeilen
+        global sql_input, HV9, HV8, HV7, Nonhv, Test, Prod, header_zeilen, einstellung_uebernehmen
         print("Taste Start gedrückt")
 
         # Löscht alle Zeilen inkl. der Kopfzeile
@@ -306,13 +312,6 @@ class MainWindow(QMainWindow):
         sheet.delete_rows(1, sheet.max_row)
         header_zeilen = False
 
-        # Zu beginn alle globalen Variablen für die Auswahl auf 0 setzen
-        # HV9 = '0'
-        # HV8 = '0'
-        # HV7 = '0'
-        # Nonhv = '0'
-        # Test = '0'
-        # Prod = '0'
 
 
         # Verhindern, dass beide Checkboxen für Test und Prod abgewählt sind
@@ -321,46 +320,23 @@ class MainWindow(QMainWindow):
             sender = self.sender()
             self.gui.checkBox_Test.setChecked(True)
             Test = '1'
-        # if not self.gui.checkBox_Test.isChecked() and not self.gui.checkBox_PROD.isChecked():
-        #     # Wenn beide nicht ausgewählt sind, eine Test Checkbox wieder aktivieren
-        #     sender = self.sender()
-        #     if sender == self.gui.checkBox_Test:
-        #         self.gui.checkBox_PROD.setChecked(True)
-        #         Prod = '1'
-        #     else:
-        #         self.gui.checkBox_Test.setChecked(True)
-        #         Test = '1'
 
-
-        # Die Werte der Checkboxen in die globalen Variablen schreiben
-        # if self.gui.checkBox_HV9.isChecked():
-        #     HV9 = '1'
-        # if self.gui.checkBox_HV8.isChecked():
-        #     HV8 = '1'
-        # if self.gui.checkBox_HV7.isChecked():
-        #     HV7 = '1'
-        # if self.gui.checkBox_NONHV.isChecked():
-        #     Nonhv = '1'
-        # if self.gui.checkBox_Test.isChecked():
-        #     Test = '1'
-        # if self.gui.checkBox_PROD.isChecked():
-        #     Prod = '1'
 
 
 
         # Speichern des Status der CheckBoxen wenn dies angewählt ist
         ## TO DO Einstellung muss noch mal geprüft werden
-        # if self.gui.checkBox_Einstellung.isChecked():
-        #     config.set('Einstellungen', 'HV9', '1' if self.gui.checkBox_HV9.isChecked() else '0')
-        #     config.set('Einstellungen', 'HV8', '1' if self.gui.checkBox_HV8.isChecked() else '0')
-        #     config.set('Einstellungen', 'HV7', '1' if self.gui.checkBox_HV7.isChecked() else '0')
-        #     config.set('Einstellungen', 'Nonhv', '1' if self.gui.checkBox_NONHV.isChecked() else '0')
-        #     config.set('Einstellungen', 'Test', '1' if self.gui.checkBox_Test.isChecked() else '0')
-        #     config.set('Einstellungen', 'Prod', '1' if self.gui.checkBox_PROD.isChecked() else '0')
-        #
-        #     # Schreiben der Änderungen zurück in die INI-Datei
-        #     with open('SQL-master.ini', 'w') as configfile:
-        #         config.write(configfile)
+        if einstellung_uebernehmen == '1':
+            config.set('Einstellungen', 'HV9', HV9)
+            config.set('Einstellungen', 'HV8', HV8)
+            config.set('Einstellungen', 'HV7', HV7)
+            config.set('Einstellungen', 'Nonhv', Nonhv)
+            config.set('Einstellungen', 'Test', Test)
+            config.set('Einstellungen', 'Prod', Prod)
+
+            # Schreiben der Änderungen zurück in die INI-Datei
+            with open('SQL-master.ini', 'w') as configfile:
+                config.write(configfile)
 
 
         # Haupt-Widget und Layout
@@ -422,7 +398,6 @@ class MainWindow(QMainWindow):
                 "TST": Test,
                 "PROD": Prod
             }
-
             # Überprüfen, ob die Zeile zu den Bedingungen passt
             if (zeile[4] in conditions and conditions[zeile[4]] == '0') or \
                     (zeile[5] in conditions and conditions[zeile[5]] == '0'):
