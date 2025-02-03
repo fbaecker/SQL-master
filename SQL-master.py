@@ -417,8 +417,11 @@ class MainWindow(QMainWindow):
             zeile_in_for += 1
 
         # Excel-Datei speichern
-        workbook.save("sql_results.xlsx")
-        print("Daten wurden in die Datei 'sql_results.xlsx' geschrieben.")
+        try:
+            workbook.save("sql_results.xlsx")
+            print("Daten wurden in die Datei 'sql_results.xlsx' geschrieben.")
+        except:
+            print("Datei 'sql_results.xlsx' konnte nicht geschrieben werden.")
 
 
 
