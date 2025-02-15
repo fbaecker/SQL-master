@@ -4,19 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Das Festlegen des Table-Views erfolgt nun immer und nicht nur bei der ersten Instanz&#10;Wenn die erste Instanz keine Daten hatte sind keine Werte ausgegeben worden">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL-master.ini" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password-display/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password-display/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master/sql-master.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/sql-master.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/sql-master-password-display.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/sql-master-password-display.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/sql-master-password.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/sql-master-password.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/sql-master.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/sql-master.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql-master.exe" beforeDir="false" afterPath="$PROJECT_DIR$/sql-master.exe" afterDir="false" />
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Das Schreiben der Excel-Datei noch mit Try und except abgesichert. Wenn die Datei geöffnet ist dann die Datei nicht geschrieben werden.">
+      <change beforePath="$PROJECT_DIR$/sql_results.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/sql_results.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +22,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Excel-Ausgabe" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -49,17 +38,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Python.SQL-Master-Password.executor": "Debug",
-    "Python.SQL-master.executor": "Run",
-    "Python.main.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.SQL-Master-Password.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.SQL-master.executor&quot;: &quot;Run&quot;,
+    &quot;Python.cell.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Excel-Ausgabe&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="SQL-Master" />
@@ -156,31 +146,56 @@
       <option name="project" value="LOCAL" />
       <updated>1735307322090</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="erster Prototyp um die Daten auch in eine Excel-Liste zu schreiben">
+      <option name="closed" value="true" />
+      <created>1738012565976</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1738012565976</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Kopfzeile im Excle formatiert und Autofilter eingebaut">
+      <option name="closed" value="true" />
+      <created>1738094510428</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1738094510428</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Umstellung der Checkboxen auf globale Variable um diese dann bei der Ersellung abzufragen. Hiermit kann das SQL-State mehrfach aufgerufen werden">
+      <option name="closed" value="true" />
+      <created>1738099168711</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1738099168711</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Bei jedem Aufruf die Excel-Datei löschen, so dass nur die Ergebnisse der letzten Abfrage vorhanden sind">
+      <option name="closed" value="true" />
+      <created>1738179294902</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1738179294902</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Die CheckBox Einstellungen übernehmen auch noch auf Globle Variable umgestellt">
+      <option name="closed" value="true" />
+      <created>1738264284819</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1738264284819</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Das Schreiben der Excel-Datei noch mit Try und except abgesichert. Wenn die Datei geöffnet ist dann die Datei nicht geschrieben werden.">
+      <option name="closed" value="true" />
+      <created>1738571581923</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1738571581923</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="master" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -190,7 +205,13 @@
     <MESSAGE value="Checkboxen welche HV-Version und Test und Prod in der Maske eingebaut&#10;Initialwerte für die Checkboxen in der ini-Datei ablegen" />
     <MESSAGE value="Version 0.4&#10;Die Instanzliste mit der HV-Nummer und TST oder PROD erweitert&#10;Sortfunktion für die Instanzliste eingebaut.&#10;Berücksichtigung der CheckBoxen in bei der Abfrage" />
     <MESSAGE value="Das Festlegen des Table-Views erfolgt nun immer und nicht nur bei der ersten Instanz&#10;Wenn die erste Instanz keine Daten hatte sind keine Werte ausgegeben worden" />
-    <option name="LAST_COMMIT_MESSAGE" value="Das Festlegen des Table-Views erfolgt nun immer und nicht nur bei der ersten Instanz&#10;Wenn die erste Instanz keine Daten hatte sind keine Werte ausgegeben worden" />
+    <MESSAGE value="erster Prototyp um die Daten auch in eine Excel-Liste zu schreiben" />
+    <MESSAGE value="Kopfzeile im Excle formatiert und Autofilter eingebaut" />
+    <MESSAGE value="Umstellung der Checkboxen auf globale Variable um diese dann bei der Ersellung abzufragen. Hiermit kann das SQL-State mehrfach aufgerufen werden" />
+    <MESSAGE value="Bei jedem Aufruf die Excel-Datei löschen, so dass nur die Ergebnisse der letzten Abfrage vorhanden sind" />
+    <MESSAGE value="Die CheckBox Einstellungen übernehmen auch noch auf Globle Variable umgestellt" />
+    <MESSAGE value="Das Schreiben der Excel-Datei noch mit Try und except abgesichert. Wenn die Datei geöffnet ist dann die Datei nicht geschrieben werden." />
+    <option name="LAST_COMMIT_MESSAGE" value="Das Schreiben der Excel-Datei noch mit Try und except abgesichert. Wenn die Datei geöffnet ist dann die Datei nicht geschrieben werden." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -201,19 +222,14 @@
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>112</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>480</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SQL-Master-Password.py</url>
           <line>39</line>
           <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SQL-master.py</url>
+          <line>328</line>
+          <option name="timeStamp" value="34" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

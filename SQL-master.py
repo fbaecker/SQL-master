@@ -6,6 +6,9 @@ from typing import List
 import pyodbc # ODBC
 import re
 
+from openpyxl import Workbook
+from openpyxl.styles import Font, PatternFill
+
 
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QMessageBox, QTableWidget, \
@@ -35,10 +38,11 @@ from PyQt5.QtCore import Qt
 #           0.6 History Funktion für die SQL-Statements
 # 24.01.25  0.7 Instanzen, User und Passwort aus Dateien lesen
 # 25.01.25  1.0 Alle Instanzen kommen nun aus der INI-Datei und auch die User und Passwörter
+# 29.01.25  1.1 Ausgabe der Ergebnisse zusätzlich in eine Excel-Datei
 #
 #
 # --------------------Version
-version = "1.0"
+version = "1.1-Branch Excel-Ausgabe"
 # ---------------------------------
 
 # Defaultwerte aus der Ini-Datei lesen
@@ -51,6 +55,7 @@ Nonhv = config.get('Einstellungen', 'NONHV')
 Test = config.get('Einstellungen', 'TEST')
 Prod = config.get('Einstellungen', 'PROD')
 
+
 #Instanzen-Datei
 instanzen_datei = "instanzen.ini"
 password_ini_file = "sql-master-password.ini"
@@ -60,9 +65,15 @@ password_ini_file = "sql-master-password.ini"
 # Globale Variable
 sql_input = "select count(*) from pfistam where fsfirm <> '' "
 history_index = 0
-
+header_zeilen = False
+einstellung_uebernehmen = '0'
 
 HISTORY_FILE_JSON = "sql_history.json"
+
+# Neue Excel-Arbeitsmappe erstellen
+workbook = Workbook()
+sheet = workbook.active
+sheet.title = "SQL Ergebnisse"
 
 
 # Entschlüssele das Passwort
@@ -216,6 +227,43 @@ class MainWindow(QMainWindow):
         self.gui.action_ber.triggered.connect(self.show_about)
         self.gui.actionSQL_Eingabe.triggered.connect(self.sql_eingabe)
 
+        # Verbinden der Check-Boxen mit einer Änderungs-Methode
+        self.gui.checkBox_HV9.stateChanged.connect(self.on_checkbox_changed)
+        self.gui.checkBox_HV8.stateChanged.connect(self.on_checkbox_changed)
+        self.gui.checkBox_HV7.stateChanged.connect(self.on_checkbox_changed)
+        self.gui.checkBox_NONHV.stateChanged.connect(self.on_checkbox_changed)
+        self.gui.checkBox_Test.stateChanged.connect(self.on_checkbox_changed)
+        self.gui.checkBox_PROD.stateChanged.connect(self.on_checkbox_changed)
+        self.gui.checkBox_Einstellung.stateChanged.connect(self.on_checkbox_changed)
+
+    def on_checkbox_changed(self):
+        global HV9, HV8, HV7, Nonhv, Test, Prod, einstellung_uebernehmen
+
+        # zuerst alle globale Variable ausmachen
+        HV9 = '0'
+        HV8 = '0'
+        HV7 = '0'
+        Nonhv = '0'
+        Test = '0'
+        Prod = '0'
+        einstellung_uebernehmen = '0'
+
+        # Die Werte der Checkboxen in die globalen Variablen wieder an machen die an sind
+        if self.gui.checkBox_HV9.isChecked():
+            HV9 = '1'
+        if self.gui.checkBox_HV8.isChecked():
+            HV8 = '1'
+        if self.gui.checkBox_HV7.isChecked():
+            HV7 = '1'
+        if self.gui.checkBox_NONHV.isChecked():
+            Nonhv = '1'
+        if self.gui.checkBox_Test.isChecked():
+            Test = '1'
+        if self.gui.checkBox_PROD.isChecked():
+            Prod = '1'
+        if self.gui.checkBox_Einstellung.isChecked():
+            einstellung_uebernehmen = '1'
+
 
 
 
@@ -224,6 +272,8 @@ class MainWindow(QMainWindow):
     def open_file(self):
         print(read_json_history())
         #self.gui.plainTextEdit.setPlainText("Open File clicked")
+
+
 
     def show_about(self):
         QMessageBox.about(self, "About", "This is a PyQt5/PySide6 application")
@@ -254,57 +304,35 @@ class MainWindow(QMainWindow):
 
 
     def abfrage(self):
-        global sql_input
+        global sql_input, HV9, HV8, HV7, Nonhv, Test, Prod, header_zeilen, einstellung_uebernehmen
         print("Taste Start gedrückt")
 
+        # Löscht alle Zeilen inkl. der Kopfzeile
+        # Flag für header_zeilen auf False, damit der neue Header erstellt wird
+        sheet.delete_rows(1, sheet.max_row)
+        header_zeilen = False
 
-
-
-        # Zu beginn alle globalen Variablen für die Auswahl auf 0 setzen
-        HV9 = '0'
-        HV8 = '0'
-        HV7 = '0'
-        Nonhv = '0'
-        Test = '0'
-        Prod = '0'
 
 
         # Verhindern, dass beide Checkboxen für Test und Prod abgewählt sind
-        if not self.gui.checkBox_Test.isChecked() and not self.gui.checkBox_PROD.isChecked():
+        if Test == '0'  and Prod == '0':
             # Wenn beide nicht ausgewählt sind, eine Test Checkbox wieder aktivieren
             sender = self.sender()
-            if sender == self.gui.checkBox_Test:
-                self.gui.checkBox_PROD.setChecked(True)
-                Prod = '1'
-            else:
-                self.gui.checkBox_Test.setChecked(True)
-                Test = '1'
-
-
-        # Die Werte der Checkboxen in die globalen Variablen schreiben
-        if self.gui.checkBox_HV9.isChecked():
-            HV9 = '1'
-        if self.gui.checkBox_HV8.isChecked():
-            HV8 = '1'
-        if self.gui.checkBox_HV7.isChecked():
-            HV7 = '1'
-        if self.gui.checkBox_NONHV.isChecked():
-            Nonhv = '1'
-        if self.gui.checkBox_Test.isChecked():
+            self.gui.checkBox_Test.setChecked(True)
             Test = '1'
-        if self.gui.checkBox_PROD.isChecked():
-            Prod = '1'
+
 
 
 
         # Speichern des Status der CheckBoxen wenn dies angewählt ist
-        if self.gui.checkBox_Einstellung.isChecked():
-            config.set('Einstellungen', 'HV9', '1' if self.gui.checkBox_HV9.isChecked() else '0')
-            config.set('Einstellungen', 'HV8', '1' if self.gui.checkBox_HV8.isChecked() else '0')
-            config.set('Einstellungen', 'HV7', '1' if self.gui.checkBox_HV7.isChecked() else '0')
-            config.set('Einstellungen', 'Nonhv', '1' if self.gui.checkBox_NONHV.isChecked() else '0')
-            config.set('Einstellungen', 'Test', '1' if self.gui.checkBox_Test.isChecked() else '0')
-            config.set('Einstellungen', 'Prod', '1' if self.gui.checkBox_PROD.isChecked() else '0')
+        ## TO DO Einstellung muss noch mal geprüft werden
+        if einstellung_uebernehmen == '1':
+            config.set('Einstellungen', 'HV9', HV9)
+            config.set('Einstellungen', 'HV8', HV8)
+            config.set('Einstellungen', 'HV7', HV7)
+            config.set('Einstellungen', 'Nonhv', Nonhv)
+            config.set('Einstellungen', 'Test', Test)
+            config.set('Einstellungen', 'Prod', Prod)
 
             # Schreiben der Änderungen zurück in die INI-Datei
             with open('SQL-master.ini', 'w') as configfile:
@@ -370,7 +398,6 @@ class MainWindow(QMainWindow):
                 "TST": Test,
                 "PROD": Prod
             }
-
             # Überprüfen, ob die Zeile zu den Bedingungen passt
             if (zeile[4] in conditions and conditions[zeile[4]] == '0') or \
                     (zeile[5] in conditions and conditions[zeile[5]] == '0'):
@@ -389,6 +416,13 @@ class MainWindow(QMainWindow):
             print(f'Ende der for schleife {i}')
             zeile_in_for += 1
 
+        # Excel-Datei speichern
+        try:
+            workbook.save("sql_results.xlsx")
+            print("Daten wurden in die Datei 'sql_results.xlsx' geschrieben.")
+        except:
+            print("Datei 'sql_results.xlsx' konnte nicht geschrieben werden.")
+
 
 
 
@@ -396,6 +430,8 @@ class MainWindow(QMainWindow):
 
     # Methode um pro Instanz das SQL-Statement auszuführen am Bildschirm auszugeben
     def sql_pro_instanz(self, sql_statement, host, user, passwort, instanz, layout, nummer, version, art):
+
+        global header_zeilen
 
         print(f'Zeilen-Zähler  {instanz}: {self.zeilen_counter}')
 
@@ -428,17 +464,56 @@ class MainWindow(QMainWindow):
             return
 
 
-        # Ab hier werden die die Daten ausgegeben
+        # Ab hier werden die Daten ausgegeben
 
+        #***************Test für EXCEL-Ausgabe**********************'
+
+        # Überschriften nur in der ersten Zeile
+        if header_zeilen == False:
+            # Spaltennamen aus der Abfrage holen
+            column_names = ["Version"] + ["Art"] + ["Instanz"] +[description[0] for description in cursor.description]
+
+            # Spaltenüberschriften in die erste Zeile schreiben
+            sheet.append(column_names)
+            header_zeilen = True
+            #Autofilter in die Überschrift mit den Feldnamen setzen
+            sheet.auto_filter.ref = sheet.dimensions
+
+            # Erste Zeile Fixieren
+            sheet.freeze_panes = "A2"
+
+            # Formatierung der Kopfzeile Schrift in Bold und Hintergrund Grau
+            header_font = Font(bold=True)  # Fett
+            header_fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type="solid")  # Grau
+            for cell in sheet[1]:  # Erste Zeile (Kopfzeile)
+                cell.font = header_font
+                cell.fill = header_fill
+
+        # Datenzeilen in das Excel-Blatt schreiben
+        for row in rows:
+            sheet.append([version]+[art]+[instanz]+list(row))  # Jede Zeile in eine Liste umwandeln
+
+        # Spaltenbreite automatisch anpassen
+        for column in sheet.columns:
+            max_length = 0
+            column_letter = column[0].column_letter  # Spaltenbuchstabe (z. B. "A", "B", ...)
+            for cell in column:
+                if cell.value:  # Falls die Zelle nicht leer ist
+                    max_length = max(max_length, len(str(cell.value)))
+            adjusted_width = max_length + 2  # Etwas zusätzlichen Platz hinzufügen
+            sheet.column_dimensions[column_letter].width = adjusted_width
+
+
+        #***********************************************************
 
 
         # Definieren der Breite und Länge der Tabelle für die Ausabe und Feldnamen setzen
         # Dies wird bei jeder Instanz gemacht, da nicht sicher ist dass bei der ersten Instanz
-        # schon etwas gefunden wirdn.
+        # schon etwas gefunden wird.
 
         # Anzahl der Spalten festlegen
         #self.table_widget.setRowCount(len(rows))
-        self.table_widget.setRowCount(99999)
+        self.table_widget.setRowCount(999999)
         self.table_widget.setColumnCount(len(rows[0]) + 3)  # + 4 Felder für die Version, Art und Instanz
 
         layout.addWidget(self.table_widget)
