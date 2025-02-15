@@ -42,7 +42,7 @@ from PyQt5.QtCore import Qt
 #
 #
 # --------------------Version
-version = "1.1-Branch Excel-Ausgabe"
+version = "1.1"
 # ---------------------------------
 
 # Defaultwerte aus der Ini-Datei lesen
