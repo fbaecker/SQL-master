@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Die CheckBox Einstellungen übernehmen auch noch auf Globle Variable umgestellt">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL-master.ini" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.ini" afterDir="false" />
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Das Schreiben der Excel-Datei noch mit Try und except abgesichert. Wenn die Datei geöffnet ist dann die Datei nicht geschrieben werden.">
       <change beforePath="$PROJECT_DIR$/sql_results.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/sql_results.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -188,7 +186,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738264284819</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Das Schreiben der Excel-Datei noch mit Try und except abgesichert. Wenn die Datei geöffnet ist dann die Datei nicht geschrieben werden.">
+      <option name="closed" value="true" />
+      <created>1738571581923</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1738571581923</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -204,7 +210,8 @@
     <MESSAGE value="Umstellung der Checkboxen auf globale Variable um diese dann bei der Ersellung abzufragen. Hiermit kann das SQL-State mehrfach aufgerufen werden" />
     <MESSAGE value="Bei jedem Aufruf die Excel-Datei löschen, so dass nur die Ergebnisse der letzten Abfrage vorhanden sind" />
     <MESSAGE value="Die CheckBox Einstellungen übernehmen auch noch auf Globle Variable umgestellt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Die CheckBox Einstellungen übernehmen auch noch auf Globle Variable umgestellt" />
+    <MESSAGE value="Das Schreiben der Excel-Datei noch mit Try und except abgesichert. Wenn die Datei geöffnet ist dann die Datei nicht geschrieben werden." />
+    <option name="LAST_COMMIT_MESSAGE" value="Das Schreiben der Excel-Datei noch mit Try und except abgesichert. Wenn die Datei geöffnet ist dann die Datei nicht geschrieben werden." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
