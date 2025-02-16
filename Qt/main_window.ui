@@ -111,6 +111,32 @@
      <bool>false</bool>
     </property>
    </widget>
+   <widget class="QCheckBox" name="checkBox_default_instanz">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>60</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Default Instanz</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_default_instanz">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>60</y>
+      <width>31</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="maxLength">
+     <number>3</number>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -128,6 +154,7 @@
     <addaction name="actionOpen"/>
     <addaction name="separator"/>
     <addaction name="actionSQL_Eingabe"/>
+    <addaction name="actionSQL_History"/>
     <addaction name="actionStart"/>
     <addaction name="separator"/>
     <addaction name="separator"/>
@@ -176,6 +203,11 @@
   <action name="action_ber">
    <property name="text">
     <string>Über</string>
+   </property>
+  </action>
+  <action name="actionSQL_History">
+   <property name="text">
+    <string>SQL-History</string>
    </property>
   </action>
  </widget>

@@ -15,9 +15,11 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, Q
     QTableWidgetItem, QPlainTextEdit, QPushButton, QApplication
 from PySide6.QtCore import QTimer, QRect
 from Qt.main_window import Ui_MainWindow
+from Qt.history_window import Ui_Form  # Importiere das generierte UI-Design
 from decimal import Decimal
 
 import json
+import subprocess
 import os
 from datetime import datetime
 from PyQt5.QtCore import Qt
@@ -39,10 +41,15 @@ from PyQt5.QtCore import Qt
 # 24.01.25  0.7 Instanzen, User und Passwort aus Dateien lesen
 # 25.01.25  1.0 Alle Instanzen kommen nun aus der INI-Datei und auch die User und Passwörter
 # 29.01.25  1.1 Ausgabe der Ergebnisse zusätzlich in eine Excel-Datei
+# 15.02.25  1.2 Neue Class mit HistoryWindow qForms mit QT-Designer erstellt und eingebaut
+#               in diesem Fenster die History-Einträge ausgeben und auswähle
+#               NewWindow in SQLWindow geändert
+#               Default Instanz eingebaut
+#               Mit der Open-Funktion aus dem Menü mit nodepad++ die Json datei öffnen
 #
 #
 # --------------------Version
-version = "1.1"
+version = "1.2Branche-Statement-Histoy-mit-Anzeige"
 # ---------------------------------
 
 # Defaultwerte aus der Ini-Datei lesen
@@ -54,6 +61,8 @@ HV7 = config.get('Einstellungen', 'HV7')
 Nonhv = config.get('Einstellungen', 'NONHV')
 Test = config.get('Einstellungen', 'TEST')
 Prod = config.get('Einstellungen', 'PROD')
+Default_instanz = config.get('Einstellungen', 'default_instanz')
+Default_instanz_aktiv = config.get('Einstellungen', 'default_instanz_activ')
 
 
 #Instanzen-Datei
@@ -64,6 +73,7 @@ password_ini_file = "sql-master-password.ini"
 
 # Globale Variable
 sql_input = "select count(*) from pfistam where fsfirm <> '' "
+sql_commend =""
 history_index = 0
 header_zeilen = False
 einstellung_uebernehmen = '0'
@@ -137,13 +147,13 @@ def read_decrypted_from_ini(section, key):
 
 
 
-def save_to_json_history(sql_statement):
+def save_to_json_history(sql_statement, sql_commend):
     """Speichert ein SQL-Statement mit Metadaten in eine JSON-Datei."""
     history = []
     if os.path.exists(HISTORY_FILE_JSON):
         with open(HISTORY_FILE_JSON, "r") as file:
             history = json.load(file)
-    entry = {"timestamp": datetime.now().isoformat(), "sql": sql_statement}
+    entry = {"commend": sql_commend, "sql": sql_statement, "timestamp": datetime.now().isoformat()}
     history.append(entry)
     with open(HISTORY_FILE_JSON, "w") as file:
         json.dump(history, file, indent=4)
@@ -218,6 +228,9 @@ class MainWindow(QMainWindow):
             self.gui.checkBox_Test.setChecked(True)
         if Prod == '1':
             self.gui.checkBox_PROD.setChecked(True)
+        if Default_instanz_aktiv == '1':
+            self.gui.checkBox_default_instanz.setChecked(True)
+        self.gui.lineEdit_default_instanz.setText(Default_instanz)
 
 
         # Verbinde Menüpunkte mit Methoden
@@ -226,6 +239,7 @@ class MainWindow(QMainWindow):
         self.gui.actionStart.triggered.connect(self.abfrage)
         self.gui.action_ber.triggered.connect(self.show_about)
         self.gui.actionSQL_Eingabe.triggered.connect(self.sql_eingabe)
+        self.gui.actionSQL_History.triggered.connect(self.sql_history)
 
         # Verbinden der Check-Boxen mit einer Änderungs-Methode
         self.gui.checkBox_HV9.stateChanged.connect(self.on_checkbox_changed)
@@ -235,9 +249,19 @@ class MainWindow(QMainWindow):
         self.gui.checkBox_Test.stateChanged.connect(self.on_checkbox_changed)
         self.gui.checkBox_PROD.stateChanged.connect(self.on_checkbox_changed)
         self.gui.checkBox_Einstellung.stateChanged.connect(self.on_checkbox_changed)
+        self.gui.checkBox_default_instanz.stateChanged.connect(self.on_checkbox_changed)
+
+        #Verbinden textEdit Änderung mit Änderungs-Methode
+        self.gui.lineEdit_default_instanz.textChanged.connect(self.default_instance_changed)
+
+    def default_instance_changed(self):
+        global Default_instanz
+
+        Default_instanz = self.gui.lineEdit_default_instanz.text()
+
 
     def on_checkbox_changed(self):
-        global HV9, HV8, HV7, Nonhv, Test, Prod, einstellung_uebernehmen
+        global HV9, HV8, HV7, Nonhv, Test, Prod, einstellung_uebernehmen, Default_instanz_aktiv
 
         # zuerst alle globale Variable ausmachen
         HV9 = '0'
@@ -247,6 +271,7 @@ class MainWindow(QMainWindow):
         Test = '0'
         Prod = '0'
         einstellung_uebernehmen = '0'
+        Default_instanz_aktiv = '0'
 
         # Die Werte der Checkboxen in die globalen Variablen wieder an machen die an sind
         if self.gui.checkBox_HV9.isChecked():
@@ -263,6 +288,8 @@ class MainWindow(QMainWindow):
             Prod = '1'
         if self.gui.checkBox_Einstellung.isChecked():
             einstellung_uebernehmen = '1'
+        if self.gui.checkBox_default_instanz.isChecked():
+            Default_instanz_aktiv = '1'
 
 
 
@@ -270,8 +297,21 @@ class MainWindow(QMainWindow):
 
 
     def open_file(self):
+        """Öffnet die Json-History Datei mit einem Editor"""
         print(read_json_history())
-        #self.gui.plainTextEdit.setPlainText("Open File clicked")
+        file_path = HISTORY_FILE_JSON  # Pfad zur JSON-Datei
+
+        if os.path.exists(file_path):  # Prüfen, ob die Datei existiert
+            try:
+                if os.name == "nt":  # Windows
+                    os.startfile(file_path)
+                elif os.name == "posix":  # Linux / macOS
+                    subprocess.Popen(["xdg-open", file_path])
+            except Exception as e:
+                QMessageBox.warning(self, "Fehler", f"Konnte die Datei nicht öffnen:\n{str(e)}")
+        else:
+            QMessageBox.warning(self, "Fehler", "Die Datei sql_history.json wurde nicht gefunden!")
+
 
 
 
@@ -298,8 +338,27 @@ class MainWindow(QMainWindow):
         # print(text)
 
         # Erstelle und zeige ein neues Fenster mit QPlainTextEdit
-        self.new_window = NewWindow(self)
-        self.new_window.show()
+        self.sql_window = SqlWindow(self)
+        self.sql_window.show()
+
+    def sql_history(self):
+        print("SQL-History")
+
+        try:
+            self.table_widget.hide()
+        except:
+            print('hide ging schief')
+
+
+        # self.gui.plainTextEdit.show()
+        # text = self.gui.plainTextEdit.toPlainText()
+        # print(text)
+
+        # Erstelle und zeige ein neues Fenster mit QPlainTextEdit
+        self.history_window = HistoryWindow(self)
+        self.history_window.show()
+
+
 
 
 
@@ -333,6 +392,8 @@ class MainWindow(QMainWindow):
             config.set('Einstellungen', 'Nonhv', Nonhv)
             config.set('Einstellungen', 'Test', Test)
             config.set('Einstellungen', 'Prod', Prod)
+            config.set('Einstellungen', 'default_instanz_activ', Default_instanz_aktiv)
+            config.set('Einstellungen', 'default_instanz', Default_instanz)
 
             # Schreiben der Änderungen zurück in die INI-Datei
             with open('SQL-master.ini', 'w') as configfile:
@@ -408,12 +469,12 @@ class MainWindow(QMainWindow):
                 new_table_name = f"{zeile[3]}DATV7.{table_name}"
                 # Ersetze den Tabellennamen im SQL-Statement
                 sql_query = re.sub(rf'\b{table_name}\b', new_table_name, sql_input, flags=re.IGNORECASE)
-                print(f'SQL-statement nach der Aufbereitung: {sql_query}')
+                #print(f'SQL-statement nach der Aufbereitung: {sql_query}')
 
 
             self.sql_pro_instanz(sql_query,zeile[0],zeile[1],zeile[2], zeile[3], layout, zeile_in_for, zeile[4], zeile[5])
 
-            print(f'Ende der for schleife {i}')
+            #print(f'Ende der for schleife {i}')
             zeile_in_for += 1
 
         # Excel-Datei speichern
@@ -433,7 +494,16 @@ class MainWindow(QMainWindow):
 
         global header_zeilen
 
+        #wenn die default-Instanz aktiv ist, dann nur weiter machen, wenn die instanz auch der Default-Instanz
+        #entspricht
+        if Default_instanz_aktiv == '1' and Default_instanz != instanz:
+            return
+
         print(f'Zeilen-Zähler  {instanz}: {self.zeilen_counter}')
+
+        ## Wenn kein SQL auf der ISeries erfolgen soll die beiden Zeilen aktivieren
+        print('********** zum Test keine SQL mit einer Verbindung ausführen')
+        return
 
         # Erstelle die Verbindungszeichenfolge mit f-strings
         conn_str = (f'DRIVER={{IBM i Access ODBC Driver}};'
@@ -544,7 +614,7 @@ class MainWindow(QMainWindow):
 
 
 
-class NewWindow(QMainWindow):
+class SqlWindow(QMainWindow):
 
     def __init__(self, main_instance):
         # Das Eingabewindow für das SQL-Komando wurde hier von Hand erstellt nicht über
@@ -558,9 +628,13 @@ class NewWindow(QMainWindow):
         self.setCentralWidget(central_widget)
         layout = QVBoxLayout(central_widget)
 
-        # Erstelle ein QPlainTextEdit-Widget
+        # Erstelle ein QPlainTextEdit-Widget für da SQL-Statement
         self.plain_text_edit = QPlainTextEdit()
         layout.addWidget(self.plain_text_edit)
+
+        # Erstelle ein QPlainTextEdit-Widget für die SQL-Beschreibung
+        self.commend_text_edit = QPlainTextEdit()
+        layout.addWidget(self.commend_text_edit)
 
         # Erstelle einen OK-Knopf
         self.ok_button = QPushButton("OK")
@@ -583,8 +657,150 @@ class NewWindow(QMainWindow):
         self.history_button.clicked.connect(self.history_button_clicked)
         self.history_schreiben_button.clicked.connect(self.history_schreiben_button_clicked)
 
-        # Letzte SQL Befehl vorbelegen
+        # Letzte SQL Befehl und Beschreibung vorbelegen
         self.plain_text_edit.setPlainText(sql_input)
+        self.commend_text_edit.setPlainText(sql_commend)
+
+
+
+    def ok_button_clicked(self):
+        global sql_input
+
+        sql_statement = self.plain_text_edit.toPlainText()
+
+
+        sql_input = sql_statement
+        print(f'OK button clicked. SQL-Statement: {sql_statement}')
+        # Sie können hier weitere Aktionen hinzufügen, z.B. das Fenster schließen oder das SQL-Statement verarbeiten
+
+        self.close()
+
+
+        # Aufrufen der Methode aus der anderen Klasse
+        self.main_instance.abfrage()
+
+    def history_button_clicked(self):
+        # Ein SQL-Statement aus der History holen
+
+        global history_index
+
+        print("History geklicked")
+
+        print(f'Index {history_index}')
+        history_json = read_json_history()
+
+        # Neues Statement abrufen
+        sql_statement = history_json[history_index]["sql"]
+        print(f"Nächstes SQL-Statement: {sql_statement}")
+        self.plain_text_edit.setPlainText(sql_statement)
+        history_index += 1
+        # Vermeiden von Indexfehlern (zirkuläre Navigation)
+        if history_index >= len(history_json):
+            history_index = 0  # Zurück zum Anfang
+
+    def history_schreiben_button_clicked(self):
+        # Ein SQL-Statement aus in die History schreiben
+
+        print("History schreiben geklicked")
+        # Wenn ein neues SQL-statement eingegeben wurde, dann in History ablegen.
+        sql_statement = self.plain_text_edit.toPlainText()
+        sql_commend = self.commend_text_edit.toPlainText()
+        if sql_input != sql_statement:
+           print(f'statement {sql_statement} mit Kommentar {sql_commend} in SQL-History ablegen')
+           save_to_json_history(sql_statement, sql_commend)
+
+
+class HistoryWindow(QMainWindow, Ui_Form):
+
+    def __init__(self, main_instance):
+
+        super().__init__()
+        self.ui = Ui_Form()  # Instanz der UI-Klasse erstellen
+        self.ui.setupUi(self)  # WICHTIG! Lädt die UI-Elemente
+        self.setWindowTitle("SQL-History")
+        self.main_instance = main_instance  # Speichern der Instanz der anderen Klasse
+        self.setFixedSize(600, 500)  # Setzt eine feste Fenstergröße
+
+        # Setze die Spaltenüberschriften
+        self.ui.tableWidget_History.setHorizontalHeaderLabels(["Beschreibung", "SQL-Kommando"])
+
+        # Button-Event verbinden
+        self.ui.pushButton_ok.clicked.connect(self.use_selected_sql)
+
+        # Event für Listenauswahl
+        self.ui.tableWidget_History.itemClicked.connect(self.display_selected_sql)
+
+        # Filter verbinden
+        self.ui.lineEdit_filter.textChanged.connect(self.filter_table)
+
+        # JSON-Datei laden
+        self.load_sql_history()
+
+    def filter_table(self):
+        """Filtert die Commend-Spalte nach der im Filter eingegeben Text"""
+        filter_text = self.ui.lineEdit_filter.text().lower()
+        for row in range(self.ui.tableWidget_History.rowCount()):
+            match = False
+            for col in range(self.ui.tableWidget_History.columnCount()):
+                item = self.ui.tableWidget_History.item(row, col)
+                if item and filter_text in item.text().lower():
+                    match = True
+                    break
+            self.ui.tableWidget_History.setRowHidden(row, not match)
+
+    def load_sql_history(self):
+        """Lädt die SQL-Historie aus der JSON-Datei und zeigt sie in der Liste an."""
+        try:
+            with open("sql_history.json", "r", encoding="utf-8") as file:
+                history = json.load(file)
+
+
+            self.ui.tableWidget_History.setRowCount(len(history))  # Anzahl der Zeilen setzen muss vor der for Schleife erfolgen
+            for row, entry in enumerate(history):
+                timestamp = entry["timestamp"]
+                sql_query = entry["sql"]
+                sql_commend = entry["commend"]
+
+                # Setze die Werte in die Tabelle (Spalte 0 = Beschreibung, Spalte 1 = SQL)
+                self.ui.tableWidget_History.setItem(row, 0, QTableWidgetItem(sql_commend))
+                self.ui.tableWidget_History.setItem(row, 1, QTableWidgetItem(sql_query))
+
+
+
+            # Optional: Spalten automatisch anpassen
+            self.ui.tableWidget_History.resizeColumnsToContents()
+            self.ui.tableWidget_History.resizeRowsToContents()
+
+            # Speichern der Daten für Zugriff beim Klick
+            self.history_data = history
+
+        except Exception as e:
+            QMessageBox.warning(self, "Fehler", "SQL-Historie konnte nicht geladen werden.")
+
+    def display_selected_sql(self):
+        """Zeigt das ausgewählte SQL-Statement im Textfeld an."""
+
+        global sql_input, sql_commend
+
+        selected_row = self.ui.tableWidget_History.currentRow()
+        if selected_row >= 0:
+
+            # Ausgewältes SQL-Statement in die globale Variable schreiben
+            sql_input = self.history_data[selected_row]["sql"]
+            sql_commend = self.history_data[selected_row]["commend"]
+
+            self.ui.textEdit_SQL.setPlainText(self.history_data[selected_row]["sql"])
+
+    def use_selected_sql(self):
+        """Übernimmt das SQL-Statement für die Hauptanwendung."""
+        global sql_input
+
+        selected_sql = self.ui.textEdit_SQL.toPlainText()
+        sql_input = selected_sql
+        if selected_sql:
+            self.close()
+            self.main_instance.abfrage()
+
 
 
 

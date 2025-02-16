@@ -16,8 +16,8 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QMainWindow, QMenu,
-    QMenuBar, QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QLineEdit, QMainWindow,
+    QMenu, QMenuBar, QSizePolicy, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -38,6 +38,8 @@ class Ui_MainWindow(object):
         self.actionSQL_Eingabe.setObjectName(u"actionSQL_Eingabe")
         self.action_ber = QAction(MainWindow)
         self.action_ber.setObjectName(u"action_ber")
+        self.actionSQL_History = QAction(MainWindow)
+        self.actionSQL_History.setObjectName(u"actionSQL_History")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.checkBox_HV9 = QCheckBox(self.centralwidget)
@@ -63,6 +65,13 @@ class Ui_MainWindow(object):
         self.checkBox_Einstellung.setEnabled(True)
         self.checkBox_Einstellung.setGeometry(QRect(10, 390, 161, 20))
         self.checkBox_Einstellung.setChecked(False)
+        self.checkBox_default_instanz = QCheckBox(self.centralwidget)
+        self.checkBox_default_instanz.setObjectName(u"checkBox_default_instanz")
+        self.checkBox_default_instanz.setGeometry(QRect(610, 60, 111, 20))
+        self.lineEdit_default_instanz = QLineEdit(self.centralwidget)
+        self.lineEdit_default_instanz.setObjectName(u"lineEdit_default_instanz")
+        self.lineEdit_default_instanz.setGeometry(QRect(550, 60, 31, 21))
+        self.lineEdit_default_instanz.setMaxLength(3)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -78,6 +87,7 @@ class Ui_MainWindow(object):
         self.menuDatei.addAction(self.actionOpen)
         self.menuDatei.addSeparator()
         self.menuDatei.addAction(self.actionSQL_Eingabe)
+        self.menuDatei.addAction(self.actionSQL_History)
         self.menuDatei.addAction(self.actionStart)
         self.menuDatei.addSeparator()
         self.menuDatei.addSeparator()
@@ -99,6 +109,7 @@ class Ui_MainWindow(object):
         self.actionStart.setText(QCoreApplication.translate("MainWindow", u"Start", None))
         self.actionSQL_Eingabe.setText(QCoreApplication.translate("MainWindow", u"SQL-Eingabe", None))
         self.action_ber.setText(QCoreApplication.translate("MainWindow", u"\u00dcber", None))
+        self.actionSQL_History.setText(QCoreApplication.translate("MainWindow", u"SQL-History", None))
         self.checkBox_HV9.setText(QCoreApplication.translate("MainWindow", u"HV9", None))
         self.checkBox_HV8.setText(QCoreApplication.translate("MainWindow", u"HV8", None))
         self.checkBox_HV7.setText(QCoreApplication.translate("MainWindow", u"HV7", None))
@@ -106,6 +117,7 @@ class Ui_MainWindow(object):
         self.checkBox_Test.setText(QCoreApplication.translate("MainWindow", u"TEST", None))
         self.checkBox_PROD.setText(QCoreApplication.translate("MainWindow", u"PROD", None))
         self.checkBox_Einstellung.setText(QCoreApplication.translate("MainWindow", u"Einstellung beibehalten", None))
+        self.checkBox_default_instanz.setText(QCoreApplication.translate("MainWindow", u"Default Instanz", None))
         self.menuDatei.setTitle(QCoreApplication.translate("MainWindow", u"Datei", None))
         self.menuHilfe.setTitle(QCoreApplication.translate("MainWindow", u"Hilfe", None))
     # retranslateUi
