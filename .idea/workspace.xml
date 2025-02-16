@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Das Schreiben der Excel-Datei noch mit Try und except abgesichert. Wenn die Datei geöffnet ist dann die Datei nicht geschrieben werden.">
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Version 1.2 als Brance&#10;Neue Class mit HistoryWindow qForms mit QT-Designer erstellt und eingebaut&#10;&#10;  in diesem Fenster die History-Einträge ausgeben und auswähle&#10;NewWindow in SQLWindow geändert&#10;Default Instanz eingebaut&#10;Mit der Open-Funktion aus dem Menü mit nodepad++ die Json datei öffnen">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qt/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/main_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qt/main_window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/main_window.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql_results.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/sql_results.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,18 +42,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Python.SQL-Master-Password.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.SQL-master.executor&quot;: &quot;Run&quot;,
-    &quot;Python.cell.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Excel-Ausgabe&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Python.SQL-Master-Password.executor": "Debug",
+    "Python.SQL-master.executor": "Run",
+    "Python.cell.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Branch-statement-History-mit-Anzeige"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="SQL-Master" />
@@ -194,7 +198,31 @@
       <option name="project" value="LOCAL" />
       <updated>1738571581923</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Version 1.1 nach dem Merge der EXCEL-Branche">
+      <option name="closed" value="true" />
+      <created>1739640903601</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1739640903601</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Version 1.1 nach dem Merge der EXCEL-Branche">
+      <option name="closed" value="true" />
+      <created>1739644339394</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1739644339394</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Version 1.2 als Brance&#10;Neue Class mit HistoryWindow qForms mit QT-Designer erstellt und eingebaut&#10;&#10;  in diesem Fenster die History-Einträge ausgeben und auswähle&#10;NewWindow in SQLWindow geändert&#10;Default Instanz eingebaut&#10;Mit der Open-Funktion aus dem Menü mit nodepad++ die Json datei öffnen">
+      <option name="closed" value="true" />
+      <created>1739735181539</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1739735181539</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -211,7 +239,10 @@
     <MESSAGE value="Bei jedem Aufruf die Excel-Datei löschen, so dass nur die Ergebnisse der letzten Abfrage vorhanden sind" />
     <MESSAGE value="Die CheckBox Einstellungen übernehmen auch noch auf Globle Variable umgestellt" />
     <MESSAGE value="Das Schreiben der Excel-Datei noch mit Try und except abgesichert. Wenn die Datei geöffnet ist dann die Datei nicht geschrieben werden." />
-    <option name="LAST_COMMIT_MESSAGE" value="Das Schreiben der Excel-Datei noch mit Try und except abgesichert. Wenn die Datei geöffnet ist dann die Datei nicht geschrieben werden." />
+    <MESSAGE value="Merge branch 'Excel-Ausgabe'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;SQL-master.ini&#10;#&#9;build/sql-master-password-display/EXE-00.toc&#10;#&#9;build/sql-master-password/EXE-00.toc&#10;#&#9;build/sql-master/Analysis-00.toc&#10;#&#9;build/sql-master/EXE-00.toc&#10;#&#9;build/sql-master/PKG-00.toc&#10;#&#9;build/sql-master/sql-master.pkg&#10;#&#9;dist/sql-master-password-display.exe&#10;#&#9;dist/sql-master-password.exe&#10;#&#9;dist/sql-master.exe&#10;#&#9;sql-master.exe" />
+    <MESSAGE value="Version 1.1 nach dem Merge der EXCEL-Branche" />
+    <MESSAGE value="Version 1.2 als Brance&#10;Neue Class mit HistoryWindow qForms mit QT-Designer erstellt und eingebaut&#10;&#10;  in diesem Fenster die History-Einträge ausgeben und auswähle&#10;NewWindow in SQLWindow geändert&#10;Default Instanz eingebaut&#10;Mit der Open-Funktion aus dem Menü mit nodepad++ die Json datei öffnen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 1.2 als Brance&#10;Neue Class mit HistoryWindow qForms mit QT-Designer erstellt und eingebaut&#10;&#10;  in diesem Fenster die History-Einträge ausgeben und auswähle&#10;NewWindow in SQLWindow geändert&#10;Default Instanz eingebaut&#10;Mit der Open-Funktion aus dem Menü mit nodepad++ die Json datei öffnen" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -228,14 +259,25 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>328</line>
-          <option name="timeStamp" value="34" />
+          <line>707</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SQL-master.py</url>
+          <line>758</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SQL-master.py</url>
+          <line>262</line>
+          <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="row" />
+        <watch expression="sql_commend" />
       </configuration>
     </watches-manager>
   </component>

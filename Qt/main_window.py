@@ -102,7 +102,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.actionOpen.setText(QCoreApplication.translate("MainWindow", u"\u00d6ffen", None))
+        self.actionOpen.setText(QCoreApplication.translate("MainWindow", u"\u00d6ffen Json-History", None))
         self.actionExit.setText(QCoreApplication.translate("MainWindow", u"Exit", None))
         self.actionBalken.setText(QCoreApplication.translate("MainWindow", u"Balken", None))
         self.actionTortendiagramm.setText(QCoreApplication.translate("MainWindow", u"Tortendiagramm", None))

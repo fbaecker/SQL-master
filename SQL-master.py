@@ -680,7 +680,7 @@ class SqlWindow(QMainWindow):
         self.main_instance.abfrage()
 
     def history_button_clicked(self):
-        # Ein SQL-Statement aus der History holen
+        """Holt ein Eintrag aus der History-Tabelle"""
 
         global history_index
 
@@ -699,7 +699,7 @@ class SqlWindow(QMainWindow):
             history_index = 0  # Zurück zum Anfang
 
     def history_schreiben_button_clicked(self):
-        # Ein SQL-Statement aus in die History schreiben
+        """Ein SQL-Statement in die History schreiben"""
 
         print("History schreiben geklicked")
         # Wenn ein neues SQL-statement eingegeben wurde, dann in History ablegen.

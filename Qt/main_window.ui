@@ -172,7 +172,7 @@
   </widget>
   <action name="actionOpen">
    <property name="text">
-    <string>Öffen</string>
+    <string>Öffen Json-History</string>
    </property>
   </action>
   <action name="actionExit">
