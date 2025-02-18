@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Version 1.2 als Brance&#10;Neue Class mit HistoryWindow qForms mit QT-Designer erstellt und eingebaut&#10;&#10;  in diesem Fenster die History-Einträge ausgeben und auswähle&#10;NewWindow in SQLWindow geändert&#10;Default Instanz eingebaut&#10;Mit der Open-Funktion aus dem Menü mit nodepad++ die Json datei öffnen">
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Menütext von open geändert">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Qt/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Qt/main_window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/main_window.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql_results.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/sql_results.xlsx" afterDir="false" />
     </list>
@@ -47,6 +45,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "Python.SQL-Master-Password.executor": "Debug",
     "Python.SQL-master.executor": "Run",
+    "Python.__init__.executor": "Debug",
     "Python.cell.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -222,7 +221,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739735181539</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Menütext von open geändert">
+      <option name="closed" value="true" />
+      <created>1739737045927</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1739737045927</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -242,7 +249,8 @@
     <MESSAGE value="Merge branch 'Excel-Ausgabe'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;SQL-master.ini&#10;#&#9;build/sql-master-password-display/EXE-00.toc&#10;#&#9;build/sql-master-password/EXE-00.toc&#10;#&#9;build/sql-master/Analysis-00.toc&#10;#&#9;build/sql-master/EXE-00.toc&#10;#&#9;build/sql-master/PKG-00.toc&#10;#&#9;build/sql-master/sql-master.pkg&#10;#&#9;dist/sql-master-password-display.exe&#10;#&#9;dist/sql-master-password.exe&#10;#&#9;dist/sql-master.exe&#10;#&#9;sql-master.exe" />
     <MESSAGE value="Version 1.1 nach dem Merge der EXCEL-Branche" />
     <MESSAGE value="Version 1.2 als Brance&#10;Neue Class mit HistoryWindow qForms mit QT-Designer erstellt und eingebaut&#10;&#10;  in diesem Fenster die History-Einträge ausgeben und auswähle&#10;NewWindow in SQLWindow geändert&#10;Default Instanz eingebaut&#10;Mit der Open-Funktion aus dem Menü mit nodepad++ die Json datei öffnen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 1.2 als Brance&#10;Neue Class mit HistoryWindow qForms mit QT-Designer erstellt und eingebaut&#10;&#10;  in diesem Fenster die History-Einträge ausgeben und auswähle&#10;NewWindow in SQLWindow geändert&#10;Default Instanz eingebaut&#10;Mit der Open-Funktion aus dem Menü mit nodepad++ die Json datei öffnen" />
+    <MESSAGE value="Menütext von open geändert" />
+    <option name="LAST_COMMIT_MESSAGE" value="Menütext von open geändert" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -259,17 +267,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>707</line>
-          <option name="timeStamp" value="40" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>758</line>
-          <option name="timeStamp" value="42" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>262</line>
+          <line>266</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
@@ -278,6 +276,8 @@
       <configuration name="PythonConfigurationType">
         <watch expression="row" />
         <watch expression="sql_commend" />
+        <watch expression="matches" />
+        <watch expression="re" />
       </configuration>
     </watches-manager>
   </component>

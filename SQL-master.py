@@ -46,6 +46,10 @@ from PyQt5.QtCore import Qt
 #               NewWindow in SQLWindow geändert
 #               Default Instanz eingebaut
 #               Mit der Open-Funktion aus dem Menü mit nodepad++ die Json datei öffnen
+# 17.02.25      Sql-Aufruf mit try und except abgesichert
+# 18.02.25      Hinzufügen des richtigen Pfads zur Tabelle optimiert
+#               Tabelle kann nun mit form und join vorkommen. Bei Tabellen mit 2 oder 3
+#               wird die COM-Bibliothek genommen
 #
 #
 # --------------------Version
@@ -423,10 +427,6 @@ class MainWindow(QMainWindow):
 
 
 
-        # SQL-Statement analysieren
-        table_name = extract_table_name(sql_input)
-        print(f'Table name: {table_name}')
-
 
         zeile_in_for = 0
         for i, zeile in enumerate(sorted_list):
@@ -464,12 +464,17 @@ class MainWindow(QMainWindow):
                     (zeile[5] in conditions and conditions[zeile[5]] == '0'):
                 continue
 
-            if table_name:
-                # Erstelle den neuen Tabellennamen mit der Instanz
-                new_table_name = f"{zeile[3]}DATV7.{table_name}"
-                # Ersetze den Tabellennamen im SQL-Statement
-                sql_query = re.sub(rf'\b{table_name}\b', new_table_name, sql_input, flags=re.IGNORECASE)
-                #print(f'SQL-statement nach der Aufbereitung: {sql_query}')
+            #neue Ermittlung des Pfades
+            print(f'SQL mit dem Path {update_sql_with_paths(sql_input,zeile[3])}')
+            sql_query =update_sql_with_paths(sql_input, zeile[3])
+
+            ### Die alte Pfad-Ermittlung wird deaktiviert
+            # if table_name:
+            #     # Erstelle den neuen Tabellennamen mit der Instanz
+            #     new_table_name = f"{zeile[3]}DATV7.{table_name}"
+            #     # Ersetze den Tabellennamen im SQL-Statement
+            #     sql_query = re.sub(rf'\b{table_name}\b', new_table_name, sql_input, flags=re.IGNORECASE)
+            #     #print(f'SQL-statement nach der Aufbereitung: {sql_query}')
 
 
             self.sql_pro_instanz(sql_query,zeile[0],zeile[1],zeile[2], zeile[3], layout, zeile_in_for, zeile[4], zeile[5])
@@ -502,8 +507,8 @@ class MainWindow(QMainWindow):
         print(f'Zeilen-Zähler  {instanz}: {self.zeilen_counter}')
 
         ## Wenn kein SQL auf der ISeries erfolgen soll die beiden Zeilen aktivieren
-        print('********** zum Test keine SQL mit einer Verbindung ausführen')
-        return
+        ##print('********** zum Test keine SQL mit einer Verbindung ausführen')
+        ##return
 
         # Erstelle die Verbindungszeichenfolge mit f-strings
         conn_str = (f'DRIVER={{IBM i Access ODBC Driver}};'
@@ -525,7 +530,12 @@ class MainWindow(QMainWindow):
         # Erstelle einen Cursor-Objekt
         cursor = conn.cursor()
 
-        cursor.execute(sql_statement)
+        try:
+            cursor.execute(sql_statement)
+        except:
+            print(f'SQL-statement. {sql_statement} ging schief')
+            return
+
 
         # Hole alle Zeilen der Abfrage
         rows = cursor.fetchall()
@@ -851,13 +861,36 @@ class HistoryWindow(QMainWindow, Ui_Form):
 
 
 
-def extract_table_name(sql_statement):
-    # Suche nach dem `from`-Teil des SQL-Statements und extrahiere das Wort danach
-    match = re.search(r'from\s+(\S+)', sql_statement, re.IGNORECASE)
-    if match:
-        return match.group(1)
-    else:
-        return None
+def update_sql_with_paths(sql, instanz):
+    """Ergänzz Tabellen durch ihre Pfade Instanz(COMV7 oder DATV7),
+     und wandelt SQL in Kleinbuchstaben um."""
+
+    # SQL in Kleinbuchstaben umwandeln, um alle Varianten sicher zu erfassen
+    sql = sql.lower()
+
+    # Sucht alle Tabellennamen nach FROM oder JOIN
+    matches = re.findall(r'\b(?:from|join)\s+(\w+)', sql)
+
+    # Falls keine Tabellen gefunden wurden, gib das Original zurück
+    if not matches:
+        return sql
+
+    # Erstelle eine Ersetzungsliste für alle gefundenen Tabellen
+    replacements = {}
+    for table in matches:
+        #path = ("/comv7" if table[-1] in ["2", "3"] else "datv7") + f".{table}"
+        path = f'{instanz}comv7.{table}' if table[-1] in ["2", "3"] else f'{instanz}datv7.{table}'
+
+        replacements[table] = path
+
+        # **Tabellen direkt im SQL-String ersetzen**
+    for table, path in replacements.items():
+        sql = sql.replace(f"from {table}", f"from {path}")
+        sql = sql.replace(f"join {table}", f"join {path}")
+
+    return sql
+
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
