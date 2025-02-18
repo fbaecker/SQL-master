@@ -50,6 +50,7 @@ from PyQt5.QtCore import Qt
 # 18.02.25      Hinzufügen des richtigen Pfads zur Tabelle optimiert
 #               Tabelle kann nun mit form und join vorkommen. Bei Tabellen mit 2 oder 3
 #               wird die COM-Bibliothek genommen
+#               Menüpunkt zum Öffnen der Excel-Datei eingefügt
 #
 #
 # --------------------Version
@@ -81,8 +82,10 @@ sql_commend =""
 history_index = 0
 header_zeilen = False
 einstellung_uebernehmen = '0'
+name_excel_datei = "sql_results.xlsx"
 
 HISTORY_FILE_JSON = "sql_history.json"
+
 
 # Neue Excel-Arbeitsmappe erstellen
 workbook = Workbook()
@@ -238,7 +241,8 @@ class MainWindow(QMainWindow):
 
 
         # Verbinde Menüpunkte mit Methoden
-        self.gui.actionOpen.triggered.connect(self.open_file)
+        self.gui.actionOpen_History.triggered.connect(self.open_file)
+        self.gui.actionOpen_Excel.triggered.connect(self.open_file_excel)
         self.gui.actionExit.triggered.connect(self.exit)
         self.gui.actionStart.triggered.connect(self.abfrage)
         self.gui.action_ber.triggered.connect(self.show_about)
@@ -316,8 +320,21 @@ class MainWindow(QMainWindow):
         else:
             QMessageBox.warning(self, "Fehler", "Die Datei sql_history.json wurde nicht gefunden!")
 
+    def open_file_excel(self):
+        """Öffnet die Excel Datei """
 
+        file_path = HISTORY_FILE_JSON  # Pfad zur JSON-Datei
 
+        if os.path.exists(file_path):  # Prüfen, ob die Datei existiert
+            try:
+                if os.name == "nt":  # Windows
+                    os.startfile(name_excel_datei)
+                elif os.name == "posix":  # Linux / macOS
+                    subprocess.Popen(["xdg-open", name_excel_datei])
+            except Exception as e:
+                QMessageBox.warning(self, "Fehler", f"Konnte die Datei nicht öffnen:\n{str(e)}")
+        else:
+            QMessageBox.warning(self, "Fehler", "Die Datei "+name_excel_datei+" wurde nicht gefunden!")
 
     def show_about(self):
         QMessageBox.about(self, "About", "This is a PyQt5/PySide6 application")
@@ -465,7 +482,7 @@ class MainWindow(QMainWindow):
                 continue
 
             #neue Ermittlung des Pfades
-            print(f'SQL mit dem Path {update_sql_with_paths(sql_input,zeile[3])}')
+            ##print(f'SQL mit dem Path {update_sql_with_paths(sql_input,zeile[3])}')
             sql_query =update_sql_with_paths(sql_input, zeile[3])
 
             ### Die alte Pfad-Ermittlung wird deaktiviert
@@ -484,10 +501,10 @@ class MainWindow(QMainWindow):
 
         # Excel-Datei speichern
         try:
-            workbook.save("sql_results.xlsx")
-            print("Daten wurden in die Datei 'sql_results.xlsx' geschrieben.")
+            workbook.save(name_excel_datei)
+            print(f"Daten wurden in die Datei {name_excel_datei} geschrieben.")
         except:
-            print("Datei 'sql_results.xlsx' konnte nicht geschrieben werden.")
+            print(f"Datei {name_excel_datei} konnte nicht geschrieben werden.")
 
 
 

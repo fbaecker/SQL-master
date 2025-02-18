@@ -151,7 +151,8 @@
     <property name="title">
      <string>Datei</string>
     </property>
-    <addaction name="actionOpen"/>
+    <addaction name="actionOpen_Excel"/>
+    <addaction name="actionOpen_History"/>
     <addaction name="separator"/>
     <addaction name="actionSQL_Eingabe"/>
     <addaction name="actionSQL_History"/>
@@ -170,11 +171,6 @@
    <addaction name="menuDatei"/>
    <addaction name="menuHilfe"/>
   </widget>
-  <action name="actionOpen">
-   <property name="text">
-    <string>Öffen Json-History</string>
-   </property>
-  </action>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
@@ -208,6 +204,21 @@
   <action name="actionSQL_History">
    <property name="text">
     <string>SQL-History</string>
+   </property>
+  </action>
+  <action name="actionOpen_Excel_Datei">
+   <property name="text">
+    <string>Open Excel-Datei</string>
+   </property>
+  </action>
+  <action name="actionOpen_Excel">
+   <property name="text">
+    <string>Open Excel-Datei</string>
+   </property>
+  </action>
+  <action name="actionOpen_History">
+   <property name="text">
+    <string>Open History-Json</string>
    </property>
   </action>
  </widget>
