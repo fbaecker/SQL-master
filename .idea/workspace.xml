@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="ql-Aufruf mit try und except abgesichert&#10;Hinzufügen des richtigen Pfads zur Tabelle optimiert&#10;Tabelle kann nun mit form und join vorkommen. Bei Tabellen mit 2 oder 3&#10;wird die COM-Bibliothek genommen">
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Menüpunkt zum Öffnen der Excel-Datei eingefügt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Qt/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Qt/main_window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/main_window.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql_results.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/sql_results.xlsx" afterDir="false" />
     </list>
@@ -42,19 +40,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Python.SQL-Master-Password.executor": "Debug",
-    "Python.SQL-master.executor": "Run",
-    "Python.__init__.executor": "Debug",
-    "Python.cell.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Branch-statement-History-mit-Anzeige"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.SQL-Master-Password.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.SQL-master.executor&quot;: &quot;Run&quot;,
+    &quot;Python.__init__.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.cell.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Branch-statement-History-mit-Anzeige&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="SQL-Master" />
@@ -239,7 +237,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739910960888</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Menüpunkt zum Öffnen der Excel-Datei eingefügt">
+      <option name="closed" value="true" />
+      <created>1739913819605</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1739913819605</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -261,7 +267,8 @@
     <MESSAGE value="Version 1.2 als Brance&#10;Neue Class mit HistoryWindow qForms mit QT-Designer erstellt und eingebaut&#10;&#10;  in diesem Fenster die History-Einträge ausgeben und auswähle&#10;NewWindow in SQLWindow geändert&#10;Default Instanz eingebaut&#10;Mit der Open-Funktion aus dem Menü mit nodepad++ die Json datei öffnen" />
     <MESSAGE value="Menütext von open geändert" />
     <MESSAGE value="ql-Aufruf mit try und except abgesichert&#10;Hinzufügen des richtigen Pfads zur Tabelle optimiert&#10;Tabelle kann nun mit form und join vorkommen. Bei Tabellen mit 2 oder 3&#10;wird die COM-Bibliothek genommen" />
-    <option name="LAST_COMMIT_MESSAGE" value="ql-Aufruf mit try und except abgesichert&#10;Hinzufügen des richtigen Pfads zur Tabelle optimiert&#10;Tabelle kann nun mit form und join vorkommen. Bei Tabellen mit 2 oder 3&#10;wird die COM-Bibliothek genommen" />
+    <MESSAGE value="Menüpunkt zum Öffnen der Excel-Datei eingefügt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Menüpunkt zum Öffnen der Excel-Datei eingefügt" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -280,6 +287,11 @@
           <url>file://$PROJECT_DIR$/SQL-master.py</url>
           <line>270</line>
           <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SQL-master.py</url>
+          <line>890</line>
+          <option name="timeStamp" value="45" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

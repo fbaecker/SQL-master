@@ -879,18 +879,25 @@ class HistoryWindow(QMainWindow, Ui_Form):
 
 
 def update_sql_with_paths(sql, instanz):
-    """Ergänzz Tabellen durch ihre Pfade Instanz(COMV7 oder DATV7),
+    """Ergänzt Tabellen durch ihre Pfade Instanz(COMV7 oder DATV7),
      und wandelt SQL in Kleinbuchstaben um."""
 
     # SQL in Kleinbuchstaben umwandeln, um alle Varianten sicher zu erfassen
-    sql = sql.lower()
+    #sql = sql.lower()
+
+    # Wandelt in SQL-Stament nur from oder join in Kleinbuchstaben. Der
+    # Rest bleibt so wie er erfasst wurde. Dies ist wichtig, für die
+    # where Bedingungen. Hies ist Groß/Kleinschreibung wichtig
+    pattern = r'\b(FROM|JOIN)\b'  # Nur 'FROM' und 'JOIN' als ganze Wörter finden
+    normalized_sql = re.sub(pattern, lambda match: match.group(0).lower(), sql, flags=re.IGNORECASE)
 
     # Sucht alle Tabellennamen nach FROM oder JOIN
-    matches = re.findall(r'\b(?:from|join)\s+(\w+)', sql)
+    matches = re.findall(r'\b(?:from|join)\s+(\w+)', normalized_sql)
 
     # Falls keine Tabellen gefunden wurden, gib das Original zurück
     if not matches:
-        return sql
+        print(f'Keine Tabellen gefunden normalized_sql {normalized_sql}')
+        return normalized_sql
 
     # Erstelle eine Ersetzungsliste für alle gefundenen Tabellen
     replacements = {}
@@ -902,10 +909,11 @@ def update_sql_with_paths(sql, instanz):
 
         # **Tabellen direkt im SQL-String ersetzen**
     for table, path in replacements.items():
-        sql = sql.replace(f"from {table}", f"from {path}")
-        sql = sql.replace(f"join {table}", f"join {path}")
+        normalized_sql = normalized_sql.replace(f"from {table}", f"from {path}")
+        normalized_sql = normalized_sql.replace(f"join {table}", f"join {path}")
 
-    return sql
+    #print(f'SQL-Statement mit den Pfaden {normalized_sql}')
+    return normalized_sql
 
 
 
