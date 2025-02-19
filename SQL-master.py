@@ -549,8 +549,9 @@ class MainWindow(QMainWindow):
 
         try:
             cursor.execute(sql_statement)
-        except:
-            print(f'SQL-statement. {sql_statement} ging schief')
+        except Exception as e:
+            print(f"SQL-Statement fehlgeschlagen:\n{sql_statement}")
+            print(f"Fehlermeldung: {e}")
             return
 
 

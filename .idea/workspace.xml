@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Menüpunkt zum Öffnen der Excel-Datei eingefügt">
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Nur das from und join im SQL-Statement in Kleinbuchtaben wandelt.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql_results.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/sql_results.xlsx" afterDir="false" />
@@ -245,7 +245,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739913819605</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Nur das from und join im SQL-Statement in Kleinbuchtaben wandelt.">
+      <option name="closed" value="true" />
+      <created>1739999273388</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1739999273388</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -268,7 +276,8 @@
     <MESSAGE value="Menütext von open geändert" />
     <MESSAGE value="ql-Aufruf mit try und except abgesichert&#10;Hinzufügen des richtigen Pfads zur Tabelle optimiert&#10;Tabelle kann nun mit form und join vorkommen. Bei Tabellen mit 2 oder 3&#10;wird die COM-Bibliothek genommen" />
     <MESSAGE value="Menüpunkt zum Öffnen der Excel-Datei eingefügt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Menüpunkt zum Öffnen der Excel-Datei eingefügt" />
+    <MESSAGE value="Nur das from und join im SQL-Statement in Kleinbuchtaben wandelt." />
+    <option name="LAST_COMMIT_MESSAGE" value="Nur das from und join im SQL-Statement in Kleinbuchtaben wandelt." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -290,7 +299,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>890</line>
+          <line>891</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
       </breakpoints>
