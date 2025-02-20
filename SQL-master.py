@@ -880,8 +880,7 @@ class HistoryWindow(QMainWindow, Ui_Form):
 
 
 def update_sql_with_paths(sql, instanz):
-    """Ergänzt Tabellen durch ihre Pfade Instanz(COMV7 oder DATV7),
-     und wandelt SQL in Kleinbuchstaben um."""
+    """Ergänzt Tabellen durch ihre Pfade Instanz(COMV7 oder DATV7)"""
 
     # SQL in Kleinbuchstaben umwandeln, um alle Varianten sicher zu erfassen
     #sql = sql.lower()
@@ -908,10 +907,15 @@ def update_sql_with_paths(sql, instanz):
 
         replacements[table] = path
 
-        # **Tabellen direkt im SQL-String ersetzen**
+    # **Tabellen direkt im SQL-String ersetzen**
+    # for table, path in replacements.items():
+    #     normalized_sql = normalized_sql.replace(f"from {table}", f"from {path}")
+    #     normalized_sql = normalized_sql.replace(f"join {table}", f"join {path}")
+
+    # mit re.sub alle tabellennamen, durch path mit tabellennamen ersetzen.
+    # Hiermit werden auch bei mehrfach vorkommende Tabellen die Pfade mit reingenommen.
     for table, path in replacements.items():
-        normalized_sql = normalized_sql.replace(f"from {table}", f"from {path}")
-        normalized_sql = normalized_sql.replace(f"join {table}", f"join {path}")
+        normalized_sql = re.sub(rf'\b{table}\b', path, normalized_sql, flags=re.IGNORECASE)
 
     #print(f'SQL-Statement mit den Pfaden {normalized_sql}')
     return normalized_sql
