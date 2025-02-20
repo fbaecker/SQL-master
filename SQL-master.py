@@ -151,7 +151,21 @@ def read_decrypted_from_ini(section, key):
         print(f'Kein {key} in section {section} in der INI-Datei gefunden.')
         return ''
 
+def is_sql_in_history(sql_statement):
+    """Prüft ob ein sql-Statement schon in der history Datei enthalten ist"""
+    try:
+        with open(HISTORY_FILE_JSON, "r", encoding="utf-8") as file:
+            history = json.load(file)
 
+        # Überprüfe, ob das SQL-Statement bereits in der Historie ist
+        for entry in history:
+            if entry.get("sql") == sql_statement:
+                return True  # SQL-Statement wurde gefunden
+
+    except (FileNotFoundError, json.JSONDecodeError):
+        return False  # Datei existiert nicht oder ist fehlerhaft
+
+    return False  # SQL-Statement wurde nicht gefunden
 
 
 def save_to_json_history(sql_statement, sql_commend):
@@ -687,7 +701,7 @@ class SqlWindow(QMainWindow):
 
         # Letzte SQL Befehl und Beschreibung vorbelegen
         self.plain_text_edit.setPlainText(sql_input)
-        self.commend_text_edit.setPlainText(sql_commend)
+        self.commend_text_edit.setPlainText('')
 
 
 
@@ -733,9 +747,14 @@ class SqlWindow(QMainWindow):
         # Wenn ein neues SQL-statement eingegeben wurde, dann in History ablegen.
         sql_statement = self.plain_text_edit.toPlainText()
         sql_commend = self.commend_text_edit.toPlainText()
-        if sql_input != sql_statement:
-           print(f'statement {sql_statement} mit Kommentar {sql_commend} in SQL-History ablegen')
-           save_to_json_history(sql_statement, sql_commend)
+
+        #wenn das sql_statement noch nicht in der History-Datei ist, dann das Statement mit
+        #Kommentar abspeichern
+        if is_sql_in_history(sql_statement):
+            print(f'SQL-Befehl {sql_statement} schon in der History vorhanden')
+        else:
+            print(f'SQL-Befehl {sql_statement} mit Kommentar {sql_commend} in SQL-History ablegen')
+            save_to_json_history(sql_statement, sql_commend)
 
 
 class HistoryWindow(QMainWindow, Ui_Form):
