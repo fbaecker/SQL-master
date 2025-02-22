@@ -525,9 +525,9 @@ class MainWindow(QMainWindow):
 
 
 
-    # Methode um pro Instanz das SQL-Statement auszuführen am Bildschirm auszugeben
-    def sql_pro_instanz(self, sql_statement, host, user, passwort, instanz, layout, nummer, version, art):
 
+    def sql_pro_instanz(self, sql_statement, host, user, passwort, instanz, layout, nummer, version, art):
+        """Pro Instanz wird das SQL-Statement ausgeführt"""
         global header_zeilen
 
         #wenn die default-Instanz aktiv ist, dann nur weiter machen, wenn die instanz auch der Default-Instanz
@@ -535,7 +535,7 @@ class MainWindow(QMainWindow):
         if Default_instanz_aktiv == '1' and Default_instanz != instanz:
             return
 
-        print(f'Zeilen-Zähler  {instanz}: {self.zeilen_counter}')
+        print(f'{instanz}  {sql_statement}')
 
         ## Wenn kein SQL auf der ISeries erfolgen soll die beiden Zeilen aktivieren
         ##print('********** zum Test keine SQL mit einer Verbindung ausführen')
@@ -578,7 +578,6 @@ class MainWindow(QMainWindow):
 
         # Ab hier werden die Daten ausgegeben
 
-        #***************Test für EXCEL-Ausgabe**********************'
 
         # Überschriften nur in der ersten Zeile
         if header_zeilen == False:
@@ -619,14 +618,20 @@ class MainWindow(QMainWindow):
         #***********************************************************
 
 
-        # Definieren der Breite und Länge der Tabelle für die Ausabe und Feldnamen setzen
-        # Dies wird bei jeder Instanz gemacht, da nicht sicher ist dass bei der ersten Instanz
+        # Definieren der Breite und Länge der Tabelle für die Ausgabe und Feldnamen setzen
+        # Dies wird bei jeder Instanz gemacht, da nicht sicher ist, dass bei der ersten Instanz
         # schon etwas gefunden wird.
 
-        # Anzahl der Spalten festlegen
-        #self.table_widget.setRowCount(len(rows))
-        self.table_widget.setRowCount(999999)
-        self.table_widget.setColumnCount(len(rows[0]) + 3)  # + 4 Felder für die Version, Art und Instanz
+        # Anzahl der Zeilen und Spalten festlegen aber wenn noch keine Werte eingetragen sind
+        # Also nur zu einmal zu Beginn.
+        # Bei den Spalter werden 10 Zusatzspalten aufgenommen, da die Anzahl der Spalten von
+        # Version zu Version unterschiedlich sein kann. Wenn also zu Beginn weniger Spalten erzeugt werden
+        # gab es Problem wenn dann eine Version mehr Felder hatte
+        if self.table_widget.rowCount() == 0:
+            self.table_widget.setRowCount(99999)
+        if self.table_widget.columnCount() == 0:
+            self.table_widget.setColumnCount(len(rows[0]) + 3 +10)  # + 3 Felder für die Version, Art und Instanz + 10 Reserve
+            QApplication.processEvents()  # GUI-Blockade verhindern
 
         layout.addWidget(self.table_widget)
 

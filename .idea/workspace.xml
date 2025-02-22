@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Das ersetzen der Tabelle durch Pfad und tabelle wieder mit re.sub gemacht, so dass alle tabellen ersetzt werden">
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Das Schreiben in die History-Datei nur durchführen, wenn das SQL-Statement noch nicht vorhanden ist">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL-master.ini" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql_results.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/sql_results.xlsx" afterDir="false" />
     </list>
@@ -44,7 +45,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "Python.SQL-Master-Password.executor": "Debug",
-    "Python.SQL-master.executor": "Debug",
+    "Python.SQL-master.executor": "Run",
     "Python.__init__.executor": "Debug",
     "Python.cell.executor": "Run",
     "Python.main.executor": "Run",
@@ -269,7 +270,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740080269228</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Das Schreiben in die History-Datei nur durchführen, wenn das SQL-Statement noch nicht vorhanden ist">
+      <option name="closed" value="true" />
+      <created>1740082972790</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1740082972790</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -295,7 +304,8 @@
     <MESSAGE value="Nur das from und join im SQL-Statement in Kleinbuchtaben wandelt." />
     <MESSAGE value="except mit der Fehlermeldung" />
     <MESSAGE value="Das ersetzen der Tabelle durch Pfad und tabelle wieder mit re.sub gemacht, so dass alle tabellen ersetzt werden" />
-    <option name="LAST_COMMIT_MESSAGE" value="Das ersetzen der Tabelle durch Pfad und tabelle wieder mit re.sub gemacht, so dass alle tabellen ersetzt werden" />
+    <MESSAGE value="Das Schreiben in die History-Datei nur durchführen, wenn das SQL-Statement noch nicht vorhanden ist" />
+    <option name="LAST_COMMIT_MESSAGE" value="Das Schreiben in die History-Datei nur durchführen, wenn das SQL-Statement noch nicht vorhanden ist" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -311,23 +321,20 @@
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="instanz == 'F42'" language="Python" />
           <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>284</line>
-          <option name="timeStamp" value="44" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>752</line>
-          <option name="timeStamp" value="47" />
+          <line>629</line>
+          <option name="timeStamp" value="50" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="row" />
+        <watch expression="row" language="Python" />
         <watch expression="sql_commend" />
         <watch expression="matches" />
         <watch expression="re" />
+        <watch expression="len(rows[0])" />
       </configuration>
     </watches-manager>
   </component>
