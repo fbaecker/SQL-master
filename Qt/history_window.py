@@ -37,11 +37,11 @@ class Ui_Form(object):
         self.textEdit_SQL.setObjectName(u"textEdit_SQL")
         self.textEdit_SQL.setGeometry(QRect(10, 430, 241, 41))
         self.tableWidget_History = QTableWidget(Form)
-        if (self.tableWidget_History.columnCount() < 2):
-            self.tableWidget_History.setColumnCount(2)
+        if (self.tableWidget_History.columnCount() < 3):
+            self.tableWidget_History.setColumnCount(3)
         self.tableWidget_History.setObjectName(u"tableWidget_History")
         self.tableWidget_History.setGeometry(QRect(10, 60, 561, 351))
-        self.tableWidget_History.setColumnCount(2)
+        self.tableWidget_History.setColumnCount(3)
         self.tableWidget_History.horizontalHeader().setVisible(True)
         self.lineEdit_filter = QLineEdit(Form)
         self.lineEdit_filter.setObjectName(u"lineEdit_filter")

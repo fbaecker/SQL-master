@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Das Schreiben in die History-Datei nur durchführen, wenn das SQL-Statement noch nicht vorhanden ist">
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Das Setzen der RowCount und ColumCount bei dem Table_widget nur einmal machen, wenn noch nicht erfolgt. Bei dem ColumnCount noch 10 Reservefelder aufgenommen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Instanzen.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Instanzen.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qt/history_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/history_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qt/history_window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/history_window.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.ini" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql-master-password.ini" beforeDir="false" afterPath="$PROJECT_DIR$/sql-master-password.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql_results.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/sql_results.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -278,7 +282,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740082972790</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Das Setzen der RowCount und ColumCount bei dem Table_widget nur einmal machen, wenn noch nicht erfolgt. Bei dem ColumnCount noch 10 Reservefelder aufgenommen">
+      <option name="closed" value="true" />
+      <created>1740245445607</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1740245445607</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -305,7 +317,8 @@
     <MESSAGE value="except mit der Fehlermeldung" />
     <MESSAGE value="Das ersetzen der Tabelle durch Pfad und tabelle wieder mit re.sub gemacht, so dass alle tabellen ersetzt werden" />
     <MESSAGE value="Das Schreiben in die History-Datei nur durchführen, wenn das SQL-Statement noch nicht vorhanden ist" />
-    <option name="LAST_COMMIT_MESSAGE" value="Das Schreiben in die History-Datei nur durchführen, wenn das SQL-Statement noch nicht vorhanden ist" />
+    <MESSAGE value="Das Setzen der RowCount und ColumCount bei dem Table_widget nur einmal machen, wenn noch nicht erfolgt. Bei dem ColumnCount noch 10 Reservefelder aufgenommen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Das Setzen der RowCount und ColumCount bei dem Table_widget nur einmal machen, wenn noch nicht erfolgt. Bei dem ColumnCount noch 10 Reservefelder aufgenommen" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -321,10 +334,14 @@
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <condition expression="instanz == 'F42'" language="Python" />
           <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>629</line>
-          <option name="timeStamp" value="50" />
+          <line>846</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SQL-master.py</url>
+          <line>673</line>
+          <option name="timeStamp" value="55" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,29 +1,22 @@
 import configparser
-from cryptography.fernet import Fernet
-import sys
-from typing import List
-
-import pyodbc # ODBC
+import json
+import os
 import re
+import subprocess
+import sys
+from datetime import datetime
+from decimal import Decimal
 
+import pyodbc  # ODBC
+
+from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QMessageBox, QTableWidget, \
+    QTableWidgetItem, QPlainTextEdit, QPushButton, QApplication
+from cryptography.fernet import Fernet
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
 
-
-
-from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QMessageBox, QTableWidget, \
-    QTableWidgetItem, QPlainTextEdit, QPushButton, QApplication
-from PySide6.QtCore import QTimer, QRect
-from Qt.main_window import Ui_MainWindow
 from Qt.history_window import Ui_Form  # Importiere das generierte UI-Design
-from decimal import Decimal
-
-import json
-import subprocess
-import os
-from datetime import datetime
-from PyQt5.QtCore import Qt
-
+from Qt.main_window import Ui_MainWindow
 
 #######################################################################################################################
 # Releasenotes
@@ -51,10 +44,11 @@ from PyQt5.QtCore import Qt
 #               Tabelle kann nun mit form und join vorkommen. Bei Tabellen mit 2 oder 3
 #               wird die COM-Bibliothek genommen
 #               Menüpunkt zum Öffnen der Excel-Datei eingefügt
+# 25.02.25  1.3 History mit ID versehen und über die ID ein update machen
 #
 #
 # --------------------Version
-version = "1.2Branche-Statement-Histoy-mit-Anzeige"
+version = "1.3Branche-Statement-Histoy-mit-Anzeige"
 # ---------------------------------
 
 # Defaultwerte aus der Ini-Datei lesen
@@ -80,6 +74,7 @@ password_ini_file = "sql-master-password.ini"
 sql_input = "select count(*) from pfistam where fsfirm <> '' "
 sql_commend =""
 history_index = 0
+history_id = ""
 header_zeilen = False
 einstellung_uebernehmen = '0'
 name_excel_datei = "sql_results.xlsx"
@@ -675,6 +670,13 @@ class SqlWindow(QMainWindow):
         self.setCentralWidget(central_widget)
         layout = QVBoxLayout(central_widget)
 
+        # Erstelle ein QPlainTextEdit-Widget für das SQL-Statement (nur Anzeige)
+        self.history_id_text = QPlainTextEdit()
+        self.history_id_text.setReadOnly(True)  # Verhindert Bearbeitung
+        self.history_id_text.setMaximumHeight(30)  # Höhe begrenzen
+
+        layout.addWidget(self.history_id_text)
+
         # Erstelle ein QPlainTextEdit-Widget für da SQL-Statement
         self.plain_text_edit = QPlainTextEdit()
         layout.addWidget(self.plain_text_edit)
@@ -705,8 +707,9 @@ class SqlWindow(QMainWindow):
         self.history_schreiben_button.clicked.connect(self.history_schreiben_button_clicked)
 
         # Letzte SQL Befehl und Beschreibung vorbelegen
+        self.history_id_text.setPlainText((history_id))
         self.plain_text_edit.setPlainText(sql_input)
-        self.commend_text_edit.setPlainText('')
+        self.commend_text_edit.setPlainText(sql_commend)
 
 
 
@@ -739,7 +742,9 @@ class SqlWindow(QMainWindow):
         # Neues Statement abrufen
         sql_statement = history_json[history_index]["sql"]
         print(f"Nächstes SQL-Statement: {sql_statement}")
-        self.plain_text_edit.setPlainText(sql_statement)
+        self.history_id_text.setPlainText(history_json[history_index]["id"])
+        self.plain_text_edit.setPlainText(history_json[history_index]["sql"])
+        self.commend_text_edit.setPlainText(history_json[history_index]["commend"])
         history_index += 1
         # Vermeiden von Indexfehlern (zirkuläre Navigation)
         if history_index >= len(history_json):
@@ -771,10 +776,10 @@ class HistoryWindow(QMainWindow, Ui_Form):
         self.ui.setupUi(self)  # WICHTIG! Lädt die UI-Elemente
         self.setWindowTitle("SQL-History")
         self.main_instance = main_instance  # Speichern der Instanz der anderen Klasse
-        self.setFixedSize(600, 500)  # Setzt eine feste Fenstergröße
+        self.setFixedSize(650, 500)  # Setzt eine feste Fenstergröße
 
         # Setze die Spaltenüberschriften
-        self.ui.tableWidget_History.setHorizontalHeaderLabels(["Beschreibung", "SQL-Kommando"])
+        self.ui.tableWidget_History.setHorizontalHeaderLabels(["ID", "Beschreibung", "SQL-Kommando"])
 
         # Button-Event verbinden
         self.ui.pushButton_ok.clicked.connect(self.use_selected_sql)
@@ -802,6 +807,8 @@ class HistoryWindow(QMainWindow, Ui_Form):
 
     def load_sql_history(self):
         """Lädt die SQL-Historie aus der JSON-Datei und zeigt sie in der Liste an."""
+
+
         try:
             with open("sql_history.json", "r", encoding="utf-8") as file:
                 history = json.load(file)
@@ -809,13 +816,15 @@ class HistoryWindow(QMainWindow, Ui_Form):
 
             self.ui.tableWidget_History.setRowCount(len(history))  # Anzahl der Zeilen setzen muss vor der for Schleife erfolgen
             for row, entry in enumerate(history):
+                id = entry["id"]
                 timestamp = entry["timestamp"]
                 sql_query = entry["sql"]
                 sql_commend = entry["commend"]
 
-                # Setze die Werte in die Tabelle (Spalte 0 = Beschreibung, Spalte 1 = SQL)
-                self.ui.tableWidget_History.setItem(row, 0, QTableWidgetItem(sql_commend))
-                self.ui.tableWidget_History.setItem(row, 1, QTableWidgetItem(sql_query))
+                # Setze die Werte in die Tabelle (Spalte 1 = id, Spalte 1 = Beschreibung, Spalte 2 = SQL)
+                self.ui.tableWidget_History.setItem(row, 0, QTableWidgetItem(id))
+                self.ui.tableWidget_History.setItem(row, 1, QTableWidgetItem(sql_commend))
+                self.ui.tableWidget_History.setItem(row, 2, QTableWidgetItem(sql_query))
 
 
 
@@ -832,12 +841,13 @@ class HistoryWindow(QMainWindow, Ui_Form):
     def display_selected_sql(self):
         """Zeigt das ausgewählte SQL-Statement im Textfeld an."""
 
-        global sql_input, sql_commend
+        global sql_input, sql_commend, history_id
 
         selected_row = self.ui.tableWidget_History.currentRow()
         if selected_row >= 0:
 
             # Ausgewältes SQL-Statement in die globale Variable schreiben
+            history_id = self.history_data[selected_row]["id"]
             sql_input = self.history_data[selected_row]["sql"]
             sql_commend = self.history_data[selected_row]["commend"]
 
@@ -923,11 +933,20 @@ def update_sql_with_paths(sql, instanz):
         print(f'Keine Tabellen gefunden normalized_sql {normalized_sql}')
         return normalized_sql
 
+    # Version setzen, da nicht alle Instanzen Version 7 sind
+    if instanz in ('T09', 'F09'):
+        version = '5'
+    elif instanz in ('T11', 'T13', 'T17', 'F11', 'F13', 'F17'):
+        version = '6'
+    else:
+        version = '7'
+
     # Erstelle eine Ersetzungsliste für alle gefundenen Tabellen
     replacements = {}
     for table in matches:
+
         #path = ("/comv7" if table[-1] in ["2", "3"] else "datv7") + f".{table}"
-        path = f'{instanz}comv7.{table}' if table[-1] in ["2", "3"] else f'{instanz}datv7.{table}'
+        path = f'{instanz}comv{version}.{table}' if table[-1] in ["2", "3"] else f'{instanz}datv{version}.{table}'
 
         replacements[table] = path
 
