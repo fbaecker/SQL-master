@@ -15,6 +15,7 @@ from cryptography.fernet import Fernet
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
 
+from Qt.eingabe_window import Ui_Form_eingabe  # Importiere das generierte UI-Design
 from Qt.history_window import Ui_Form  # Importiere das generierte UI-Design
 from Qt.main_window import Ui_MainWindow
 
@@ -45,10 +46,11 @@ from Qt.main_window import Ui_MainWindow
 #               wird die COM-Bibliothek genommen
 #               Menüpunkt zum Öffnen der Excel-Datei eingefügt
 # 25.02.25  1.3 History mit ID versehen und über die ID ein update machen
+# 28.02.25  1.4 Eingabewindow mit qt-Designer erstellen
 #
 #
 # --------------------Version
-version = "1.3Branche-Statement-Histoy-mit-Anzeige"
+version = "1.4Branche-Statement-Histoy-mit-Anzeige"
 # ---------------------------------
 
 # Defaultwerte aus der Ini-Datei lesen
@@ -656,67 +658,34 @@ class MainWindow(QMainWindow):
 
 
 
-class SqlWindow(QMainWindow):
+class SqlWindow(QMainWindow, Ui_Form_eingabe):
 
     def __init__(self, main_instance):
-        # Das Eingabewindow für das SQL-Komando wurde hier von Hand erstellt nicht über
-        # den QT-Designer. Dies müsste man noch mal ändern
         super().__init__()
+        self.ui_eingabe_window = Ui_Form_eingabe()  # Instanz der UI-Klasse erstellen
+        self.ui_eingabe_window.setupUi(self)  # WICHTIG! Lädt die UI-Elemente
         self.setWindowTitle("SQL-Eingabe")
         self.main_instance = main_instance  # Speichern der Instanz der anderen Klasse
+        self.setFixedSize(650, 600)  # Setzt eine feste Fenstergröße
 
-        # Haupt-Widget und Layout
-        central_widget = QWidget()
-        self.setCentralWidget(central_widget)
-        layout = QVBoxLayout(central_widget)
-
-        # Erstelle ein QPlainTextEdit-Widget für das SQL-Statement (nur Anzeige)
-        self.history_id_text = QPlainTextEdit()
-        self.history_id_text.setReadOnly(True)  # Verhindert Bearbeitung
-        self.history_id_text.setMaximumHeight(30)  # Höhe begrenzen
-
-        layout.addWidget(self.history_id_text)
-
-        # Erstelle ein QPlainTextEdit-Widget für da SQL-Statement
-        self.plain_text_edit = QPlainTextEdit()
-        layout.addWidget(self.plain_text_edit)
-
-        # Erstelle ein QPlainTextEdit-Widget für die SQL-Beschreibung
-        self.commend_text_edit = QPlainTextEdit()
-        layout.addWidget(self.commend_text_edit)
-
-        # Erstelle einen OK-Knopf
-        self.ok_button = QPushButton("OK")
-        layout.addWidget(self.ok_button)
-
-        # Erstelle einen History lesen-Knopf
-        self.history_button = QPushButton("History lesen")
-        layout.addWidget(self.history_button)
-
-        # Erstelle einen History schreiben-Knopf
-        self.history_schreiben_button = QPushButton("History schreiben")
-        layout.addWidget(self.history_schreiben_button)
-
-
-
-        # Verbinde den OK-Knopf mit der Methode ok_button_clicked
-        self.ok_button.clicked.connect(self.ok_button_clicked)
+        # Verbinde den SQL-Start-Knopf mit der Methode ok_button_clicked
+        self.ui_eingabe_window.pushButton_sql_start.clicked.connect(self.ok_button_clicked)
 
         # Verbinde den History-Knopf mit der Methode history_clicked
-        self.history_button.clicked.connect(self.history_button_clicked)
-        self.history_schreiben_button.clicked.connect(self.history_schreiben_button_clicked)
+        self.ui_eingabe_window.pushButton_history_lesen.clicked.connect(self.history_button_clicked)
+        self.ui_eingabe_window.pushButton_history_schreiben.clicked.connect(self.history_schreiben_button_clicked)
 
         # Letzte SQL Befehl und Beschreibung vorbelegen
-        self.history_id_text.setPlainText((history_id))
-        self.plain_text_edit.setPlainText(sql_input)
-        self.commend_text_edit.setPlainText(sql_commend)
+        self.ui_eingabe_window.label_id.setText(history_id)
+        self.ui_eingabe_window.plainTextEdit_statement.setPlainText(sql_input)
+        self.ui_eingabe_window.plainTextEdit_commend.setPlainText(sql_commend)
 
 
 
     def ok_button_clicked(self):
         global sql_input
 
-        sql_statement = self.plain_text_edit.toPlainText()
+        sql_statement = self.ui_eingabe_window.plainTextEdit_statement.toPlainText()
 
 
         sql_input = sql_statement
@@ -742,9 +711,9 @@ class SqlWindow(QMainWindow):
         # Neues Statement abrufen
         sql_statement = history_json[history_index]["sql"]
         print(f"Nächstes SQL-Statement: {sql_statement}")
-        self.history_id_text.setPlainText(history_json[history_index]["id"])
-        self.plain_text_edit.setPlainText(history_json[history_index]["sql"])
-        self.commend_text_edit.setPlainText(history_json[history_index]["commend"])
+        self.ui_eingabe_window.label_id.setText(history_json[history_index]["id"])
+        self.ui_eingabe_window.plainTextEdit_statement.setPlainText(history_json[history_index]["sql"])
+        self.ui_eingabe_window.plainTextEdit_commend.setPlainText(history_json[history_index]["commend"])
         history_index += 1
         # Vermeiden von Indexfehlern (zirkuläre Navigation)
         if history_index >= len(history_json):
@@ -755,8 +724,8 @@ class SqlWindow(QMainWindow):
 
         print("History schreiben geklicked")
         # Wenn ein neues SQL-statement eingegeben wurde, dann in History ablegen.
-        sql_statement = self.plain_text_edit.toPlainText()
-        sql_commend = self.commend_text_edit.toPlainText()
+        sql_statement = self.ui_eingabe_window.plainTextEdit_statement.toPlainText()
+        sql_commend = self.ui_eingabe_window.plainTextEdit_commend.toPlainText()
 
         #wenn das sql_statement noch nicht in der History-Datei ist, dann das Statement mit
         #Kommentar abspeichern
