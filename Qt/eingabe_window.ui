@@ -113,6 +113,19 @@
     <string>History schreiben</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton_neue_id">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>10</y>
+     <width>75</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Neue ID</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

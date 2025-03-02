@@ -47,6 +47,8 @@ from Qt.main_window import Ui_MainWindow
 #               Menüpunkt zum Öffnen der Excel-Datei eingefügt
 # 25.02.25  1.3 History mit ID versehen und über die ID ein update machen
 # 28.02.25  1.4 Eingabewindow mit qt-Designer erstellen
+# 02.03.25  1.5 Beim Schreiben der History-Datei, updaten über die ID. Wenn die ID blank ist dann neuen
+#               Eintrag erstellen
 #
 #
 # --------------------Version
@@ -165,14 +167,45 @@ def is_sql_in_history(sql_statement):
     return False  # SQL-Statement wurde nicht gefunden
 
 
-def save_to_json_history(sql_statement, sql_commend):
-    """Speichert ein SQL-Statement mit Metadaten in eine JSON-Datei."""
+def save_to_json_history(sql_statement, sql_commend, id=None):
+    """Speichert ein SQL-Statement mit Metadaten in eine JSON-Datei.
+    Wenn eine ID angegeben ist und bereits existiert, wird der entsprechende Eintrag aktualisiert.
+    Wenn keine ID angegeben ist, wird eine neue ID vergeben.
+    """
     history = []
+    # JSON-Datei einlesen, falls sie existiert
     if os.path.exists(HISTORY_FILE_JSON):
         with open(HISTORY_FILE_JSON, "r") as file:
             history = json.load(file)
-    entry = {"commend": sql_commend, "sql": sql_statement, "timestamp": datetime.now().isoformat()}
-    history.append(entry)
+
+     # Höchste vorhandene ID ermitteln und in Integer umwandeln
+    max_id = max((int(item.get("id", 0)) for item in history), default=0)
+
+    # Neue ID vergeben, falls keine angegeben ist
+    if not id:
+        id = max_id + 1
+
+    # Neuen Eintrag erstellen
+    entry = {
+        "id": str(id),
+        "commend": sql_commend,
+        "sql": sql_statement,
+        "timestamp": datetime.now().isoformat()
+    }
+
+    # Überprüfen, ob die ID bereits existiert
+    for index, item in enumerate(history):
+        if item.get("id") == id:
+            # Eintrag aktualisieren
+            print(f' Eintrag mit der ID={id} aktualisiert')
+            history[index] = entry
+            break
+    else:
+        # ID existiert nicht, neuen Eintrag hinzufügen
+        print(f'Neuer Eintrag mit ID={id} hinzugefügt')
+        history.append(entry)
+
+    # Aktualisierte Liste in die JSON-Datei schreiben
     with open(HISTORY_FILE_JSON, "w") as file:
         json.dump(history, file, indent=4)
 
@@ -675,14 +708,21 @@ class SqlWindow(QMainWindow, Ui_Form_eingabe):
         self.ui_eingabe_window.pushButton_history_lesen.clicked.connect(self.history_button_clicked)
         self.ui_eingabe_window.pushButton_history_schreiben.clicked.connect(self.history_schreiben_button_clicked)
 
+        # Verbinde den Neue-ID-Knopf mit der Methode new_id_clicked
+        self.ui_eingabe_window.pushButton_neue_id.clicked.connect(self.new_id_clicked)
+
         # Letzte SQL Befehl und Beschreibung vorbelegen
         self.ui_eingabe_window.label_id.setText(history_id)
         self.ui_eingabe_window.plainTextEdit_statement.setPlainText(sql_input)
         self.ui_eingabe_window.plainTextEdit_commend.setPlainText(sql_commend)
 
 
+    def new_id_clicked(self):
+        """Löscht die ID-der History um einen neuen Eintrag zu erzeugen"""
+        self.ui_eingabe_window.label_id.setText('')
 
     def ok_button_clicked(self):
+        """Ruft die Methode zum Ausführen des SQL-Statements auf"""
         global sql_input
 
         sql_statement = self.ui_eingabe_window.plainTextEdit_statement.toPlainText()
@@ -726,15 +766,17 @@ class SqlWindow(QMainWindow, Ui_Form_eingabe):
         # Wenn ein neues SQL-statement eingegeben wurde, dann in History ablegen.
         sql_statement = self.ui_eingabe_window.plainTextEdit_statement.toPlainText()
         sql_commend = self.ui_eingabe_window.plainTextEdit_commend.toPlainText()
+        id = self.ui_eingabe_window.label_id.text()
 
         #wenn das sql_statement noch nicht in der History-Datei ist, dann das Statement mit
         #Kommentar abspeichern
-        if is_sql_in_history(sql_statement):
-            print(f'SQL-Befehl {sql_statement} schon in der History vorhanden')
-        else:
-            print(f'SQL-Befehl {sql_statement} mit Kommentar {sql_commend} in SQL-History ablegen')
-            save_to_json_history(sql_statement, sql_commend)
+        # if is_sql_in_history(sql_statement):
+        #     print(f'SQL-Befehl {sql_statement} schon in der History vorhanden')
+        # else:
+        #     print(f'SQL-Befehl {sql_statement} mit Kommentar {sql_commend} in SQL-History ablegen')
+        #     save_to_json_history(sql_statement, sql_commend, id)
 
+        save_to_json_history(sql_statement, sql_commend, id)
 
 class HistoryWindow(QMainWindow, Ui_Form):
 
@@ -851,34 +893,6 @@ class HistoryWindow(QMainWindow, Ui_Form):
         # Aufrufen der Methode aus der anderen Klasse
         self.main_instance.abfrage()
 
-    def history_button_clicked(self):
-        # Ein SQL-Statement aus der History holen
-
-        global history_index
-
-        print("History geklicked")
-
-        print(f'Index {history_index}')
-        history_json = read_json_history()
-
-        # Neues Statement abrufen
-        sql_statement = history_json[history_index]["sql"]
-        print(f"Nächstes SQL-Statement: {sql_statement}")
-        self.plain_text_edit.setPlainText(sql_statement)
-        history_index += 1
-        # Vermeiden von Indexfehlern (zirkuläre Navigation)
-        if history_index >= len(history_json):
-            history_index = 0  # Zurück zum Anfang
-
-    def history_schreiben_button_clicked(self):
-        # Ein SQL-Statement aus in die History schreiben
-
-        print("History schreiben geklicked")
-        # Wenn ein neues SQL-statement eingegeben wurde, dann in History ablegen.
-        sql_statement = self.plain_text_edit.toPlainText()
-        if sql_input != sql_statement:
-           print(f'statement {sql_statement} in SQL-History ablegen')
-           save_to_json_history(sql_statement)
 
 
 

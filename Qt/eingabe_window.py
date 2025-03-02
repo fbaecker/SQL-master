@@ -51,6 +51,9 @@ class Ui_Form_eingabe(object):
         self.pushButton_history_schreiben = QPushButton(Form_eingabe)
         self.pushButton_history_schreiben.setObjectName(u"pushButton_history_schreiben")
         self.pushButton_history_schreiben.setGeometry(QRect(120, 540, 101, 24))
+        self.pushButton_neue_id = QPushButton(Form_eingabe)
+        self.pushButton_neue_id.setObjectName(u"pushButton_neue_id")
+        self.pushButton_neue_id.setGeometry(QRect(140, 10, 75, 24))
 
         self.retranslateUi(Form_eingabe)
 
@@ -64,5 +67,6 @@ class Ui_Form_eingabe(object):
         self.label_id.setText(QCoreApplication.translate("Form_eingabe", u"TextLabel", None))
         self.pushButton_history_lesen.setText(QCoreApplication.translate("Form_eingabe", u"History lesen", None))
         self.pushButton_history_schreiben.setText(QCoreApplication.translate("Form_eingabe", u"History schreiben", None))
+        self.pushButton_neue_id.setText(QCoreApplication.translate("Form_eingabe", u"Neue ID", None))
     # retranslateUi
 

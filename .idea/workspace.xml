@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Version 1.3&#10;erste Schritte um in der History noch eine ID zu führen">
-      <change afterPath="$PROJECT_DIR$/Qt/eingabe_window.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Qt/eingabe_window.ui" afterDir="false" />
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Version 1.4&#10;Das Eigabe-Window mit dem QT-Designer erstellt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qt/eingabe_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/eingabe_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qt/eingabe_window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Qt/eingabe_window.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql_results.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/sql_results.xlsx" afterDir="false" />
     </list>
@@ -295,7 +295,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740517641352</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Version 1.4&#10;Das Eigabe-Window mit dem QT-Designer erstellt">
+      <option name="closed" value="true" />
+      <created>1740854577583</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1740854577583</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -324,7 +332,8 @@
     <MESSAGE value="Das Schreiben in die History-Datei nur durchführen, wenn das SQL-Statement noch nicht vorhanden ist" />
     <MESSAGE value="Das Setzen der RowCount und ColumCount bei dem Table_widget nur einmal machen, wenn noch nicht erfolgt. Bei dem ColumnCount noch 10 Reservefelder aufgenommen" />
     <MESSAGE value="Version 1.3&#10;erste Schritte um in der History noch eine ID zu führen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 1.3&#10;erste Schritte um in der History noch eine ID zu führen" />
+    <MESSAGE value="Version 1.4&#10;Das Eigabe-Window mit dem QT-Designer erstellt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 1.4&#10;Das Eigabe-Window mit dem QT-Designer erstellt" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -341,7 +350,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SQL-master.py</url>
-          <line>815</line>
+          <line>855</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
       </breakpoints>
