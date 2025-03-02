@@ -52,7 +52,7 @@ from Qt.main_window import Ui_MainWindow
 #
 #
 # --------------------Version
-version = "1.4Branche-Statement-Histoy-mit-Anzeige"
+version = "1.5"
 # ---------------------------------
 
 # Defaultwerte aus der Ini-Datei lesen
