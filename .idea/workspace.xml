@@ -4,34 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Version 1.5&#10;Neue Masterversion nach dem Merge der History Branche">
+    <list default="true" id="1259981a-bdc1-4d73-a623-884e878580e2" name="Changes" comment="Version 1.6 Die Bedingung für den Pfad COM erweietert. Es wird nun auf 2, 3, 4, 5,  und auf pbestnve abgefragt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password-display/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password-display/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password-display/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password-display/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password-display/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password-display/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password-display/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password-display/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password-display/sql-master-password-display.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password-display/sql-master-password-display.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password-display/warn-sql-master-password-display.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password-display/warn-sql-master-password-display.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password-display/xref-sql-master-password-display.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password-display/xref-sql-master-password-display.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password/sql-master-password.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password/sql-master-password.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password/warn-sql-master-password.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password/warn-sql-master-password.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master-password/xref-sql-master-password.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master-password/xref-sql-master-password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Instanzen.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Instanzen.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL-master.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL-master.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/sql-master/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/Analysis-00.toc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/sql-master/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/EXE-00.toc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/sql-master/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/sql-master/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/PYZ-00.toc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/sql-master/sql-master.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/sql-master.pkg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/sql-master/warn-sql-master.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/warn-sql-master.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/sql-master/xref-sql-master.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/sql-master/xref-sql-master.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/sql-master-password-display.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/sql-master-password-display.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/sql-master-password.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/sql-master-password.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/sql-master.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/sql-master.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql-master-password.ini" beforeDir="false" afterPath="$PROJECT_DIR$/sql-master-password.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql-master.exe" beforeDir="false" afterPath="$PROJECT_DIR$/sql-master.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql_results.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/sql_results.xlsx" afterDir="false" />
     </list>
@@ -335,12 +318,19 @@
       <option name="project" value="LOCAL" />
       <updated>1740946245187</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Version 1.6 Die Bedingung für den Pfad COM erweietert. Es wird nun auf 2, 3, 4, 5,  und auf pbestnve abgefragt">
+      <option name="closed" value="true" />
+      <created>1741682183323</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1741682183323</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Version 0.2&#10;Aufruf von mehreren Instanzen. Mit diesem Stand kann nun aufgebaut werden" />
     <MESSAGE value="Zeilenzähler korrigiert. Wenn Ergebniss nur 1 Zeile z.B. wegen Count wurde nichts ausgegeben" />
     <MESSAGE value="Checkboxen welche HV-Version und Test und Prod in der Maske eingebaut&#10;Initialwerte für die Checkboxen in der ini-Datei ablegen" />
     <MESSAGE value="Version 0.4&#10;Die Instanzliste mit der HV-Nummer und TST oder PROD erweitert&#10;Sortfunktion für die Instanzliste eingebaut.&#10;Berücksichtigung der CheckBoxen in bei der Abfrage" />
@@ -365,7 +355,8 @@
     <MESSAGE value="Version 1.3&#10;erste Schritte um in der History noch eine ID zu führen" />
     <MESSAGE value="Version 1.4&#10;Das Eigabe-Window mit dem QT-Designer erstellt" />
     <MESSAGE value="Version 1.5&#10;Neue Masterversion nach dem Merge der History Branche" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 1.5&#10;Neue Masterversion nach dem Merge der History Branche" />
+    <MESSAGE value="Version 1.6 Die Bedingung für den Pfad COM erweietert. Es wird nun auf 2, 3, 4, 5,  und auf pbestnve abgefragt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 1.6 Die Bedingung für den Pfad COM erweietert. Es wird nun auf 2, 3, 4, 5,  und auf pbestnve abgefragt" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

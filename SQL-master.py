@@ -7,6 +7,8 @@ import sys
 from datetime import datetime
 from decimal import Decimal
 
+
+
 import pyodbc  # ODBC
 
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QMessageBox, QTableWidget, \
@@ -49,11 +51,11 @@ from Qt.main_window import Ui_MainWindow
 # 28.02.25  1.4 Eingabewindow mit qt-Designer erstellen
 # 02.03.25  1.5 Beim Schreiben der History-Datei, updaten über die ID. Wenn die ID blank ist dann neuen
 #               Eintrag erstellen
-# 11.03.25  1.6 Die Bedingung für den PfadCOM erweietert. Es wird nun auf 2, 3, 4, 5,  und auf pbestnve abgefragt
-#
+# 11.03.25  1.6 Die Bedingung für den PfadCOM erweitert. Es wird nun auf 2, 3, 4, 5,  und auf pbestnve abgefragt
+# 26.05.25  1.7 Für die LGUMFELD wird der Path PGMV gesetzt
 #
 # --------------------Version
-version = "1.6"
+version = "1.7"
 # ---------------------------------
 
 # Defaultwerte aus der Ini-Datei lesen
@@ -929,10 +931,15 @@ def update_sql_with_paths(sql, instanz):
     replacements = {}
     for table in matches:
 
-        #path = ("/comv7" if table[-1] in ["2", "3"] else "datv7") + f".{table}"
         # Wenn der dateiname mit 2, 3, 4, 5, oder die pbestnve ist dann liegt die datei in der COM
-        path = f'{instanz}comv{version}.{table}' if table.endswith(("2", "3", "4", "5","pbestnve")) else f'{instanz}datv{version}.{table}'
-
+        # die lgumfeld liegt in der pgm
+        # der Rest liegt in der dat
+        if table == "lgumfeld":
+            path = f'{instanz}pgmv{version}.{table}'
+        elif table.endswith(("2", "3", "4", "5", "pbestnve")):
+            path = f'{instanz}comv{version}.{table}'
+        else:
+            path = f'{instanz}datv{version}.{table}'
         replacements[table] = path
 
     # **Tabellen direkt im SQL-String ersetzen**
